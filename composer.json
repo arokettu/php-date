@@ -1,0 +1,23 @@
+{
+    "name": "arokettu/date",
+    "description": "Date class for PHP (without time)",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Anton Smirnov",
+            "email": "sandfox+git@sandfox.me"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "Arokettu\\Date\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Arokettu\\Date\\Tests\\": "tests"
+        }
+    },
+    "require": {}
+}
