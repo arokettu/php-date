@@ -7,6 +7,7 @@ namespace Arokettu\Date;
 use DateTimeImmutable;
 use DateTimeInterface;
 use DateTimeZone;
+use DomainException;
 use Stringable;
 
 final readonly class Date implements Stringable
@@ -72,6 +73,45 @@ final readonly class Date implements Stringable
         return sprintf("%d-%02d-%02d", $ymd[0], $ymd[1], $ymd[2]);
     }
 
+    // ymd factory
+
+    private static function fromGregorianRaw(int $y, int $m, int $d): self
+    {
+        $monthCorrection = intdiv($m - 14, 12);
+        $julianDay =
+            intdiv(1461 * ($y + 4800 + $monthCorrection), 4) +
+            intdiv(367 * ($m - 2 - 12 * $monthCorrection), 12) -
+            intdiv(3 * (intdiv($y + 4900 + $monthCorrection, 100)), 4) +
+            $d - 32075;
+
+        return new self($julianDay);
+    }
+
+    public static function today(?DateTimeZone $timeZone = null): self
+    {
+        return self::fromDateTime(new DateTimeImmutable('now', $timeZone));
+    }
+
+    public static function create(int $y, Month|int $m, int $d): self
+    {
+        if ($m instanceof Month) {
+            $mo = $m;
+            $mi = $m->value;
+        } else {
+            $mo = Month::tryFrom($m) ??
+                throw new DomainException('Month must be an instance of Month or an integer 1-12');
+            $mi = $m;
+        }
+
+        $days = $mo->days($y);
+
+        if ($d < 1 || $d > $days) {
+            throw new DomainException("For month $mi day must be in range 1-$days");
+        }
+
+        return self::fromGregorianRaw($y, $mi, $d);
+    }
+
     // DateTime conversion
 
     public static function fromDateTime(DateTimeInterface $dateTime): self
@@ -81,14 +121,7 @@ final readonly class Date implements Stringable
         $m = \intval($dateTime->format('m'));
         $d = \intval($dateTime->format('d'));
 
-        $monthCorrection = intdiv($m - 14, 12);
-        $julianDay =
-            intdiv(1461 * ($y + 4800 + $monthCorrection), 4) +
-            intdiv(367 * ($m - 2 - 12 * $monthCorrection), 12) -
-            intdiv(3 * (intdiv($y + 4900 + $monthCorrection, 100)), 4) +
-            $d - 32075;
-
-        return new self($julianDay);
+        return self::fromGregorianRaw($y, $m, $d);
     }
 
     public function toDateTime(?DateTimeZone $timeZone = null): DateTimeImmutable
