@@ -19,5 +19,7 @@
             "Arokettu\\Date\\Tests\\": "tests"
         }
     },
-    "require": {}
+    "require": {
+        "php": "^8.2"
+    }
 }
