@@ -41,13 +41,14 @@ final readonly class Date implements Stringable
 
         $j = $this->julianDay;
 
-        if ($j >= 0) {
-            $c = intdiv($j, 146097);
-        } else {
-            // add $c 400-year cycles to make $j positive
-            $c = intdiv($j, 146097) - 1;
+        // normalize to 0-400 years (146097 days)
+        $c = intdiv($j, 146097);
+        $j -= $c * 146097;
+        // additional step to avoid int overflow on PHP_INT_MIN
+        if ($j < 0) {
+            $j += 146097;
+            $c -= 1;
         }
-        $j -= $c * 146097; // normalize to 0-400 years (146097 days)
 
         // https://en.wikipedia.org/wiki/Julian_day#Julian_or_Gregorian_calendar_from_Julian_day_number
         $f = $j + 1401 + intdiv(intdiv(4 * $j + 274277, 146097) * 3, 4) - 38;
