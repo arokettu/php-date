@@ -33,7 +33,8 @@ final readonly class Date implements Stringable
     public function getDateArray(): array
     {
         // https://en.wikipedia.org/wiki/Julian_day#Julian_or_Gregorian_calendar_from_Julian_day_number
-        $f = $this->julianDay + 1401 + intdiv(intdiv(4 * $this->julianDay + 274277, 146097) * 3, 4) - 38;
+        $j = $this->julianDay;
+        $f = $j + 1401 + intdiv(intdiv(4 * $j + 274277, 146097) * 3, 4) - 38;
         $e = 4 * $f + 3;
         $g = intdiv($e % 1461, 4);
         $h = 5 * $g + 2;
