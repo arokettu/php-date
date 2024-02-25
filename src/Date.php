@@ -6,8 +6,9 @@ namespace Arokettu\Date;
 
 use DateTimeImmutable;
 use DateTimeInterface;
+use Stringable;
 
-final readonly class Date
+final readonly class Date implements Stringable
 {
     public function __construct(
         public int $julianDay,
@@ -62,6 +63,14 @@ final readonly class Date
         return $this->getDateArray()[2];
     }
 
+    // string conversion
+
+    public function toString(): string
+    {
+        $ymd = $this->getDateArray();
+        return sprintf("%d-%02d-%02d", $ymd[0], $ymd[1], $ymd[2]);
+    }
+
     // DateTime conversion
 
     public static function fromDateTime(DateTimeInterface $dateTime): self
@@ -85,5 +94,22 @@ final readonly class Date
     {
         $ymd = $this->getDateArray();
         return (new DateTimeImmutable('today'))->setDate($ymd[0], $ymd[1], $ymd[2]);
+    }
+
+    // magic
+
+    public function __serialize(): array
+    {
+        return [$this->julianDay];
+    }
+
+    public function __unserialize(array $data): void
+    {
+        [$this->julianDay] = $data;
+    }
+
+    public function __toString(): string
+    {
+        return $this->toString();
     }
 }
