@@ -163,4 +163,12 @@ final readonly class Date implements Stringable
     {
         return $this->toString();
     }
+
+    public function __debugInfo(): array
+    {
+        return [
+            'date' => $this->toString(),
+            'julianDay' => $this->julianDay,
+        ];
+    }
 }
