@@ -41,13 +41,13 @@ final readonly class Date implements Stringable
 
         $j = $this->julianDay;
 
-        if ($j < 0) {
-            // add $c 400-year cycles to make $j positive
-            $c = 1 - intdiv($j, 146097);
-            $j += $c * 146097;
+        if ($j >= 0) {
+            $c = intdiv($j, 146097);
         } else {
-            $c = 0;
+            // add $c 400-year cycles to make $j positive
+            $c = intdiv($j, 146097) - 1;
         }
+        $j -= $c * 146097; // normalize to 0-400 years (146097 days)
 
         // https://en.wikipedia.org/wiki/Julian_day#Julian_or_Gregorian_calendar_from_Julian_day_number
         $f = $j + 1401 + intdiv(intdiv(4 * $j + 274277, 146097) * 3, 4) - 38;
@@ -59,7 +59,7 @@ final readonly class Date implements Stringable
         $m = (intdiv($h, 153) + 2) % 12 + 1;
         $y = intdiv($e, 1461) - 4716 + intdiv(12 + 2 - $m, 12);
 
-        return CacheHelper::$dateArray[$this] = [$y - $c * 400, $m, $d];
+        return CacheHelper::$dateArray[$this] = [$y + $c * 400, $m, $d];
     }
 
     public function getYear(): int
@@ -94,12 +94,21 @@ final readonly class Date implements Stringable
 
     private static function fromGregorianRaw(int $y, int $m, int $d): self
     {
+        // normalize to 0..400 years (146097 days)
+        if ($y >= 0) {
+            $c = intdiv($y, 400);
+        } else {
+            $c = intdiv($y, 400) - 1;
+        }
+        $y -= $c * 400;
+
         $monthCorrection = intdiv($m - 14, 12);
         $julianDay =
             intdiv(1461 * ($y + 4800 + $monthCorrection), 4) +
             intdiv(367 * ($m - 2 - 12 * $monthCorrection), 12) -
             intdiv(3 * (intdiv($y + 4900 + $monthCorrection, 100)), 4) +
             $d - 32075;
+        $julianDay += $c * 146097;
 
         return new self($julianDay);
     }
