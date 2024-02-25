@@ -6,6 +6,7 @@ namespace Arokettu\Date;
 
 use DateTimeImmutable;
 use DateTimeInterface;
+use DateTimeZone;
 use Stringable;
 
 final readonly class Date implements Stringable
@@ -90,10 +91,10 @@ final readonly class Date implements Stringable
         return new self($julianDay);
     }
 
-    public function toDateTime(): DateTimeImmutable
+    public function toDateTime(?DateTimeZone $timeZone = null): DateTimeImmutable
     {
         $ymd = $this->getDateArray();
-        return (new DateTimeImmutable('today'))->setDate($ymd[0], $ymd[1], $ymd[2]);
+        return (new DateTimeImmutable('today', $timeZone))->setDate($ymd[0], $ymd[1], $ymd[2]);
     }
 
     // magic
