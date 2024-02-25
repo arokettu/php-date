@@ -106,7 +106,7 @@ final readonly class Date implements Stringable
         $days = $mo->days($y);
 
         if ($d < 1 || $d > $days) {
-            throw new DomainException("For month $mi day must be in range 1-$days");
+            throw new DomainException("For year $y month $mi, day must be in range 1-$days");
         }
 
         return self::fromGregorianRaw($y, $mi, $d);
