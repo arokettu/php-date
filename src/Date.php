@@ -32,8 +32,17 @@ final readonly class Date implements Stringable
 
     public function getDateArray(): array
     {
-        // https://en.wikipedia.org/wiki/Julian_day#Julian_or_Gregorian_calendar_from_Julian_day_number
         $j = $this->julianDay;
+
+        if ($j < 0) {
+            // add $c 400-year cycles to make $j positive
+            $c = 1 - intdiv($j, 146097);
+            $j += $c * 146097;
+        } else {
+            $c = 0;
+        }
+
+        // https://en.wikipedia.org/wiki/Julian_day#Julian_or_Gregorian_calendar_from_Julian_day_number
         $f = $j + 1401 + intdiv(intdiv(4 * $j + 274277, 146097) * 3, 4) - 38;
         $e = 4 * $f + 3;
         $g = intdiv($e % 1461, 4);
@@ -43,7 +52,7 @@ final readonly class Date implements Stringable
         $m = (intdiv($h, 153) + 2) % 12 + 1;
         $y = intdiv($e, 1461) - 4716 + intdiv(12 + 2 - $m, 12);
 
-        return [$y, $m, $d];
+        return [$y - $c * 400, $m, $d];
     }
 
     public function getYear(): int
