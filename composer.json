@@ -9,6 +9,12 @@
             "email": "sandfox+git@sandfox.me"
         }
     ],
+    "config": {
+        "allow-plugins": {
+            "dealerdirect/phpcodesniffer-composer-installer": true
+        },
+        "sort-packages": true
+    },
     "autoload": {
         "psr-4": {
             "Arokettu\\Date\\": "src/"
@@ -21,5 +27,12 @@
     },
     "require": {
         "php": "^8.2"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^10.5.10",
+        "psy/psysh": "*",
+        "sandfox.dev/code-standard": "^1.2023.12.09",
+        "squizlabs/php_codesniffer": "*",
+        "vimeo/psalm": "^5.22"
     }
 }
