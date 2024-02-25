@@ -27,7 +27,7 @@ final readonly class Date implements Stringable
     public function getWeekDay(): WeekDay
     {
         $wd = $this->julianDay % 7 + 1;
-        return WeekDay::from($wd);
+        return WeekDay::from($wd > 0 ? $wd : $wd + 7);
     }
 
     public function getDateArray(): array
