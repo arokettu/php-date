@@ -130,6 +130,23 @@ final readonly class Date implements Stringable
         return (new DateTimeImmutable('today', $timeZone))->setDate($ymd[0], $ymd[1], $ymd[2]);
     }
 
+    // arithmetic
+
+    public function add(int $days): self
+    {
+        return new self($this->julianDay + $days);
+    }
+
+    public function subDays(int $days): self
+    {
+        return new self($this->julianDay - $days);
+    }
+
+    public function sub(Date $date): int
+    {
+        return $this->julianDay - $date->julianDay;
+    }
+
     // magic
 
     public function __serialize(): array
