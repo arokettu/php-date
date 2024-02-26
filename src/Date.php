@@ -97,11 +97,17 @@ final readonly class Date implements Stringable
     {
         // normalize to 0..400 years (146097 days)
         if ($y >= 0) {
-            $c = intdiv($y, 400);
+            $c1 = intdiv($y, 400);
+            $c2 = 0;
         } else {
-            $c = intdiv($y, 400) - 1;
+            // this insane code here is to avoid int overflow on PHP_INT_MIN
+            // because simple logic with $c1 * 146097 may overflow, so we split one correction with two
+            // that's guaranteed to be in range as long as the final result is in range
+            $c1 = intdiv($y, 400) - 1;
+            $c2 = intdiv($c1, 2);
+            $c1 -= $c2;
         }
-        $y -= $c * 400;
+        $y -= ($c1 + $c2) * 400;
 
         $monthCorrection = intdiv($m - 14, 12);
         $julianDay =
@@ -109,7 +115,8 @@ final readonly class Date implements Stringable
             intdiv(367 * ($m - 2 - 12 * $monthCorrection), 12) -
             intdiv(3 * (intdiv($y + 4900 + $monthCorrection, 100)), 4) +
             $d - 32075;
-        $julianDay += $c * 146097;
+        $julianDay += $c1 * 146097;
+        $julianDay += $c2 * 146097;
 
         return new self($julianDay);
     }

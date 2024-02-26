@@ -44,17 +44,27 @@ class RangeEdgeCasesTest extends TestCase
         self::assertEquals('-25252734927771267-04-30', (string)$date1);
         self::assertEquals(WeekDay::Sunday, $date1->getWeekDay());
 
-//        $date2 = Date::create(-25252734927771267, 5, 1);
-//        self::assertEquals($date1, $date2);
+        $date2 = Date::create(-25252734927771267, 4, 30);
+        self::assertEquals($date1, $date2);
     }
 
-    public function testPhpIntMin32(): void
+    public function testPhpIntMax32(): void
     {
         $date1 = new Date(2147483647);
         self::assertEquals('5874898-06-03', (string)$date1);
         self::assertEquals(WeekDay::Tuesday, $date1->getWeekDay());
 
         $date2 = Date::create(5874898, 6, 3);
+        self::assertEquals($date1, $date2);
+    }
+
+    public function testPhpIntMin32(): void
+    {
+        $date1 = new Date(-2147483647 - 1);
+        self::assertEquals('-5884323-05-15', (string)$date1);
+        self::assertEquals(WeekDay::Saturday, $date1->getWeekDay());
+
+        $date2 = Date::create(-5884323, 5, 15);
         self::assertEquals($date1, $date2);
     }
 }
