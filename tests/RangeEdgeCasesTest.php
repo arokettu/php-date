@@ -70,6 +70,10 @@ class RangeEdgeCasesTest extends TestCase
 
     public function testMaxOverflow(): void
     {
+        if (PHP_INT_SIZE < 8) {
+            $this->markTestSkipped();
+        }
+
         $this->expectException(\DomainException::class);
         $this->expectExceptionMessage('Date value overflow');
 
@@ -78,6 +82,10 @@ class RangeEdgeCasesTest extends TestCase
 
     public function testMinOverflow(): void
     {
+        if (PHP_INT_SIZE < 8) {
+            $this->markTestSkipped();
+        }
+
         $this->expectException(\DomainException::class);
         $this->expectExceptionMessage('Date value overflow');
 
