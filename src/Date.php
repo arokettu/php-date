@@ -146,6 +146,17 @@ final readonly class Date implements Stringable
         return self::fromGregorianRaw($y, $mi, $d);
     }
 
+    public static function parse(string $string): self
+    {
+        if (!preg_match('/(-?\d+)-(\d+)-(\d+)/', $string, $matches)) {
+            throw new DomainException('Unable to parse the date string: ' . $string);
+        }
+
+        [/* $_ */, $y, $m, $d] = $matches;
+
+        return self::create(\intval($y), \intval($m), \intval($d));
+    }
+
     // DateTime conversion
 
     public static function fromDateTime(DateTimeInterface $dateTime): self
@@ -162,6 +173,16 @@ final readonly class Date implements Stringable
     {
         $ymd = $this->getDateArray();
         return (new DateTimeImmutable('today', $timeZone))->setDate($ymd[0], $ymd[1], $ymd[2]);
+    }
+
+    public static function parseDateTimeString(string $string, ?DateTimeZone $timeZone = null): self
+    {
+        return self::fromDateTime(new DateTimeImmutable($string, $timeZone));
+    }
+
+    public function formatDateTime(string $format): string
+    {
+        return $this->toDateTime()->format($format);
     }
 
     // arithmetic

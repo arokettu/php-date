@@ -78,4 +78,37 @@ class FactoriesTest extends TestCase
 
         Date::create(2000, 11, 33);
     }
+
+    public function testParser(): void
+    {
+        // positive year
+        $date = Date::parse('2025-2-25');
+        self::assertEquals('2025-02-25', (string)$date);
+
+        // negative year
+        $date = Date::parse('-2025-2-25');
+        self::assertEquals('-2025-02-25', (string)$date);
+
+        // zero year
+        $date = Date::parse('0-2-25');
+        self::assertEquals('0-02-25', (string)$date);
+        $date = Date::parse('-0-2-25');
+        self::assertEquals('0-02-25', (string)$date);
+    }
+
+    public function testParserInvalidFormat(): void
+    {
+        $this->expectException(\DomainException::class);
+        $this->expectExceptionMessage('Unable to parse the date string: 2015/12/12');
+
+        Date::parse('2015/12/12'); // Only Y-m-d is accepted
+    }
+
+    public function testParserInvalidValue(): void
+    {
+        $this->expectException(\DomainException::class);
+        $this->expectExceptionMessage('For year 2015 month 2, day must be in range 1-28');
+
+        Date::parse('2015-002-42');
+    }
 }

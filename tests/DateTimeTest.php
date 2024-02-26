@@ -24,4 +24,18 @@ class DateTimeTest extends TestCase
 
         self::assertEquals($dt, $date->toDateTime());
     }
+
+    public function testParse(): void
+    {
+        $date = Date::parseDateTimeString('17 April 1996');
+
+        self::assertEquals('1996-04-17', (string)$date);
+    }
+
+    public function testFormat()
+    {
+        $date = Date::create(2050, 9, 1);
+
+        self::assertEquals('09/01/50', $date->formatDateTime('m/d/y'));
+    }
 }
