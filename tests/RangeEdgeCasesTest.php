@@ -67,4 +67,20 @@ class RangeEdgeCasesTest extends TestCase
         $date2 = Date::create(-5884323, 5, 15);
         self::assertEquals($date1, $date2);
     }
+
+    public function testMaxOverflow(): void
+    {
+        $this->expectException(\DomainException::class);
+        $this->expectExceptionMessage('Date value overflow');
+
+        Date::create(25252734927761842, 6, 21);
+    }
+
+    public function testMinOverflow(): void
+    {
+        $this->expectException(\DomainException::class);
+        $this->expectExceptionMessage('Date value overflow');
+
+        Date::create(-25252734927771267, 4, 29);
+    }
 }

@@ -118,6 +118,10 @@ final readonly class Date implements Stringable
         $julianDay += $c1 * 146097;
         $julianDay += $c2 * 146097;
 
+        if (\is_integer($julianDay) === false) {
+            throw new DomainException('Date value overflow');
+        }
+
         return new self($julianDay);
     }
 
