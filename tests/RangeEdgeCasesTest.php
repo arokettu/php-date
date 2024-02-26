@@ -40,7 +40,7 @@ class RangeEdgeCasesTest extends TestCase
             $this->markTestSkipped();
         }
 
-        $date1 = new Date(-9223372036854775807-1);
+        $date1 = new Date(-9223372036854775807 - 1);
         self::assertEquals('-25252734927771267-04-30', (string)$date1);
         self::assertEquals(WeekDay::Sunday, $date1->getWeekDay());
 
