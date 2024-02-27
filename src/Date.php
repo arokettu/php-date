@@ -15,7 +15,7 @@ use WeakMap;
 final readonly class Date implements Stringable
 {
     public function __construct(
-        public int $julianDay,
+        private int $julianDay,
     ) {
     }
 

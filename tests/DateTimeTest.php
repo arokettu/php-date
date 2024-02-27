@@ -14,7 +14,7 @@ class DateTimeTest extends TestCase
         $dt = new \DateTime('2024-02-25');
         $date = Date::fromDateTime($dt);
 
-        self::assertEquals(2460366, $date->julianDay);
+        self::assertEquals(2460366, $date->getJulianDay());
     }
 
     public function testToDateTime(): void
