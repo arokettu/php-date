@@ -4,6 +4,6 @@
 
 ### 1.0.0
 
-*todo*
+*Feb 27, 2024*
 
 * Initial release
