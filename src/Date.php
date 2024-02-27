@@ -19,12 +19,19 @@ final readonly class Date implements Stringable
     ) {
     }
 
-    // various getters
+    // Julian day
 
     public function getJulianDay(): int
     {
         return $this->julianDay;
     }
+
+    public static function createJulianDay(int $julianDay): self
+    {
+        return new self($julianDay);
+    }
+
+    // various getters
 
     public function getWeekDay(): WeekDay
     {

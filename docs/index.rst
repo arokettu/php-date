@@ -19,6 +19,7 @@ Documentation
    :maxdepth: 2
 
    common
+   julian_date
 
 License
 =======

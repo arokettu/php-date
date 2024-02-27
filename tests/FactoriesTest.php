@@ -111,4 +111,11 @@ class FactoriesTest extends TestCase
 
         Date::parse('2015-002-42');
     }
+
+    public function testJulianDay(): void
+    {
+        $date = Date::createJulianDay(2500000);
+
+        self::assertEquals('2132-08-31', (string)$date);
+    }
 }
