@@ -19,6 +19,7 @@ Documentation
    :maxdepth: 2
 
    common
+   gregorian
    julian_date
 
 License
