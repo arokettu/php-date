@@ -19,9 +19,43 @@
 
 A class for php to work with pure dates (without time).
 
+* Works with the proleptic Gregorian calendar by default
+* Uses Julian day internally
+* Does not depend on the calendar extension
+* Correctly supports full integer range for the dates
+  (-5884323-05-15 to 5874898-06-03 on a 32-bit system, even more on 64-bit) 
+
 ## Usage
 
-TODO
+The library:
+
+```php
+<?php
+
+use Arokettu\Date\Date;
+use Arokettu\Date\Month;
+
+// creation
+$date = Date::today(); // example: 2024-02-27
+// or
+$date = Date::create(2024, Month::February, 27);
+// or
+$date = Date::fromDateTime(new DateTime('Feb 27, 2024')); // truncates time
+// or
+$date = Date::parse('2024-02-27'); // Y-m-d is expected, years can be negative
+// or
+$date = Date::parseDateTimeString('Feb 27, 2024');
+
+// getters
+$date->getDay(); // 27
+$date->getMonth(); // Month::February
+$date->getMonthNumber(); // 2
+$date->getYear(); // 2024
+$date->getWeekDay(); // WeekDay::Tuesday
+$date->getJulianDay(); // 2460368
+$date->toDateTime(); // DateTimeImmutable('2024-02-27') // midnight in a default timezone
+$date->toString(); // "2024-02-27"
+```
 
 ## Installation
 
