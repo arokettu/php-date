@@ -28,8 +28,13 @@ final readonly class Date implements Stringable
 
     public function getWeekDay(): WeekDay
     {
+        return WeekDay::from($this->getWeekDayNumber());
+    }
+
+    public function getWeekDayNumber(): int
+    {
         $wd = $this->julianDay % 7 + 1;
-        return WeekDay::from($wd > 0 ? $wd : $wd + 7);
+        return $wd > 0 ? $wd : $wd + 7;
     }
 
     public function getDateArray(): array
@@ -109,6 +114,7 @@ final readonly class Date implements Stringable
         }
         $y -= ($c1 + $c2) * 400;
 
+        // https://en.wikipedia.org/wiki/Julian_day#Converting_Gregorian_calendar_date_to_Julian_Day_Number
         $monthCorrection = intdiv($m - 14, 12);
         $julianDay =
             intdiv(1461 * ($y + 4800 + $monthCorrection), 4) +
@@ -165,7 +171,6 @@ final readonly class Date implements Stringable
 
     public static function fromDateTime(DateTimeInterface $dateTime): self
     {
-        // https://en.wikipedia.org/wiki/Julian_day#Converting_Gregorian_calendar_date_to_Julian_Day_Number
         $y = \intval($dateTime->format('Y'));
         $m = \intval($dateTime->format('m'));
         $d = \intval($dateTime->format('d'));
