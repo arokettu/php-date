@@ -4,14 +4,14 @@ Gregorian Calendar
 .. highlight:: php
 
 Proleptic Gregorian calendar is the default calendar of the library.
-Years are assumed to be in the astronomical notation. (1 AD = 1, 1 BC = 0, 2 BC = -1)
-The date range is -5884323-05-15 to 5874898-06-03 for a 32-bit system
-and -25252734927771267-04-30 to 25252734927761842-06-20 on a 64-bit system.
+Years are assumed to be in the astronomical notation. (``1 AD`` is ``1``, ``1 BC`` is ``0``, ``2 BC`` is ``-1``)
+The date range is ``-5884323-05-15`` to ``5874898-06-03`` for a 32-bit system
+and ``-25252734927771267-04-30`` to ``25252734927761842-06-20`` on a 64-bit system.
 
 Factories
 =========
 
-You can create an instance of date from either components or a ``Y-m-d`` string format (years can be negative)::
+You can create an instance of date from either date components or a ``Y-m-d`` string format (years can be negative)::
 
     <?php
 

@@ -84,7 +84,13 @@ Get a DateTimeImmutable object corresponding to midnight at a given date in a de
 
     <?php
 
-    use Arokettu\Date\Date;
-
     $date->toDateTime(); // timestamp at given date midnight system time
     $date->toDateTime(new DateTimeZone('Asia/Tokyo')); // timestamp at given date midnight Tokyo
+
+Also a formatter shortcut is available::
+
+    <?php
+
+    $date->formatDateTime('m/d/y');
+    // equivalent to
+    $date->getDateTime()->format('m/d/y');
