@@ -21,6 +21,7 @@ Documentation
    common
    gregorian
    julian_date
+   doctrine
 
 License
 =======
