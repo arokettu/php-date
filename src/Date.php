@@ -46,9 +46,9 @@ final readonly class Date implements Stringable
 
     public function getDateArray(): array
     {
-        CacheHelper::$dateArray ??= new WeakMap();
-        if (isset(CacheHelper::$dateArray[$this])) {
-            return CacheHelper::$dateArray[$this];
+        $cache = CacheHelper::$dateArray ??= new WeakMap();
+        if (isset($cache[$this])) {
+            return $cache[$this];
         }
 
         $j = $this->julianDay;
@@ -72,7 +72,7 @@ final readonly class Date implements Stringable
         $m = (intdiv($h, 153) + 2) % 12 + 1;
         $y = intdiv($e, 1461) - 4716 + intdiv(12 + 2 - $m, 12);
 
-        return CacheHelper::$dateArray[$this] = [$y + $c * 400, $m, $d];
+        return $cache[$this] = [$y + $c * 400, $m, $d];
     }
 
     public function getYear(): int
