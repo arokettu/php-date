@@ -165,6 +165,11 @@ final readonly class Date implements Stringable
 
     public static function parse(string $string): self
     {
+        return self::fromString($string);
+    }
+
+    public static function fromString(string $string): self
+    {
         if (!preg_match('/(-?\d+)-(\d+)-(\d+)/', $string, $matches)) {
             throw new DomainException('Unable to parse the date string: ' . $string);
         }
