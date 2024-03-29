@@ -10,7 +10,7 @@ use Arokettu\Date\Month;
 use DomainException;
 use WeakMap;
 
-final readonly class JulianDate implements CalendarDateInterface
+final readonly class JulianCalendarDate implements CalendarDateInterface
 {
     use CalendarDateTrait;
 
@@ -92,7 +92,6 @@ final readonly class JulianDate implements CalendarDateInterface
         $y -= ($c1 + $c2) * 700;
 
         // https://en.wikipedia.org/wiki/Julian_day#Converting_Gregorian_calendar_date_to_Julian_Day_Number
-        $monthCorrection = intdiv($m - 14, 12);
         $julianDay =
             367 * $y -
             intdiv(7 * ($y + 5001 + intdiv($m - 9, 7)), 4) +

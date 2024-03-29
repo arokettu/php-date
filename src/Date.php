@@ -229,10 +229,10 @@ final readonly class Date implements Stringable
 
     // alternative calendars
 
-    public function julian(): Calendars\JulianDate
+    public function julian(): Calendars\JulianCalendarDate
     {
         CacheHelper::$julianDateObject ??= new WeakMap();
-        return CacheHelper::$julianDateObject[$this] ??= new Calendars\JulianDate($this);
+        return CacheHelper::$julianDateObject[$this] ??= new Calendars\JulianCalendarDate($this);
     }
 
     // magic
