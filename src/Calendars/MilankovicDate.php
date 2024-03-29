@@ -24,7 +24,15 @@ final readonly class MilankovicDate implements Stringable
 
         // normalize to 0-900 years (328718 days)
         $c = intdiv($j, self::Y900_DAYS) - 6;
-        $j -= $c * self::Y900_DAYS;
+        if ($c >= 0) {
+            $j -= $c * self::Y900_DAYS;
+        } else {
+            // prevent int_min overflow
+            $c1 = intdiv($c,2);
+            $c2 = $c - $c1;
+            $j -= $c1 * self::Y900_DAYS;
+            $j -= $c2 * self::Y900_DAYS;
+        }
 
         $d = 9 * ($j - self::BASE_DAY - 1) + 2;
         $e = intdiv($d, self::Y900_DAYS);
