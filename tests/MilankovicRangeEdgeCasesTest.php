@@ -62,10 +62,10 @@ class MilankovicRangeEdgeCasesTest extends TestCase
     public function testPhpIntMin32(): void
     {
         $date1 = Date::createFromJulianDay(-2147483647 - 1);
-        self::assertEquals('-5884202-03-16', (string)$date1->milankovic());
+        self::assertEquals('-5884328-11-22', (string)$date1->milankovic());
         self::assertEquals(WeekDay::Saturday, $date1->getWeekDay());
 
-        $date2 = MilankovicCalendar::create(-5884202, 3, 16);
+        $date2 = MilankovicCalendar::create(-5884328, 11, 22);
         self::assertEquals($date1, $date2);
     }
 
