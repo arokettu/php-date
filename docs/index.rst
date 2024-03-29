@@ -21,6 +21,7 @@ Documentation
    common
    gregorian
    julian
+   milankovic
    julian_date
    doctrine
    upgrade
