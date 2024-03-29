@@ -2,6 +2,12 @@
 
 ## 2.x
 
+### 2.1.0
+
+*Mar 29, 2024*
+
+* Added Revised Julian (Milanković) calendar
+
 ### 2.0.0
 
 *Mar 29, 2024*
