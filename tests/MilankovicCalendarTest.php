@@ -33,6 +33,13 @@ class MilankovicCalendarTest extends TestCase
         self::assertEquals($date1, $date3);
     }
 
+    public function testSpecificEdgeCase(): void
+    {
+        $date = MilankovicCalendar::parse('1800-01-01'); // year is divisible by 900 and month is before March
+
+        self::assertEquals(Calendar::parse('1800-01-01'), $date); // in 19th century they align
+    }
+
     public function testSameInstance(): void
     {
         $date = Date::today();

@@ -46,6 +46,6 @@ final readonly class MilankovicDate implements Stringable
         $m = $mm - 12 * $mc + 3;
         $d = intdiv($yd % 153, 5) + 1;
 
-        return [$y + $c * 900, $m, $d];
+        return $this->dateArray = [$y + $c * 900, $m, $d];
     }
 }
