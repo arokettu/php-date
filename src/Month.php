@@ -28,8 +28,20 @@ enum Month: int
                 => 31,
             self::April, self::June, self::September, self::November,
                 => 30,
-            self::February
+            self::February,
                 => YearHelper::isLeap($year) ? 29 : 28,
+        };
+    }
+
+    public function julianDays(int $year): int
+    {
+        return match ($this) {
+            self::January, self::March, self::May, self::July, self::August, self::October, self::December,
+                => 31,
+            self::April, self::June, self::September, self::November,
+                => 30,
+            self::February,
+                => YearHelper::isJulianLeap($year) ? 29 : 28,
         };
     }
 }

@@ -18,4 +18,10 @@ final class YearHelper
         $c = intdiv($y, 100);
         return $c % 4 === 0;
     }
+
+    public static function isJulianLeap(int $y): bool
+    {
+        // julian leap year
+        return $y % 4 === 0;
+    }
 }
