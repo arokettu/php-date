@@ -20,8 +20,10 @@ Documentation
 
    common
    gregorian
+   julian
    julian_date
    doctrine
+   upgrade
 
 License
 =======

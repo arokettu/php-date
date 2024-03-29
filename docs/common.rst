@@ -9,6 +9,8 @@ Date Object
 The ``Date`` object is immutable.
 Internally it only contains the set Julian day integer.
 
+The ``Calendar`` class contains factories for the Gregorian calendar and DateTime interoperability.
+
 Arithmetic
 ----------
 
@@ -16,9 +18,10 @@ You can add or subtract days::
 
     <?php
 
+    use Arokettu\Date\Calendar;
     use Arokettu\Date\Date;
 
-    $date = Date::parse('2012-12-21');
+    $date = Calendar::parse('2012-12-21');
 
     echo $date->add(100); // 2013-03-31, 100 days after the apocalypse
     echo $date->subDays(100); // 2012-09-12 // = echo $date->add(-100);
@@ -68,14 +71,14 @@ Create an instance of Date from an instance of DateTimeInterface or by using Dat
 
     <?php
 
-    use Arokettu\Date\Date;
+    use Arokettu\Date\Calendar;
 
     $dt = new DateTime('Feb 28, 2024');
-    $date = Date::fromDateTime($dt);
+    $date = Calendar::fromDateTime($dt);
     // or
-    $date = Date::parseDateTimeString('Feb 28, 2024');
+    $date = Calendar::parseDateTimeString('Feb 28, 2024');
     // or any other expression DateTime supports:
-    $date = Date::parseDateTimeString('tomorrow');
+    $date = Calendar::parseDateTimeString('tomorrow');
 
 Export
 ------

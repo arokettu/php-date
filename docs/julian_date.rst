@@ -22,7 +22,7 @@ Julian day value accepts any integer from PHP_INT_MIN to PHP_INT_MAX.
     use Arokettu\Date\Date;
 
     // use a semantic factory
-    $date = Date::createJulianDay(2460368);
+    $date = Date::createFromJulianDay(2460368);
     // or construct directly
     $date = new Date(2460368);
 

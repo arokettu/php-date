@@ -15,16 +15,16 @@ You can create an instance of date from either date components or a ``Y-m-d`` st
 
     <?php
 
-    use Arokettu\Date\Date;
+    use Arokettu\Date\Calendar;
     use Arokettu\Date\Month;
 
-    $date = Date::create(2012, 12, 21);
+    $date = Calendar::create(2012, 12, 21);
     // or use a month object
-    $date = Date::create(2012, Month::December, 21);
+    $date = Calendar::create(2012, Month::December, 21);
     // or parse Y-m-d
-    $date = Date::parse('2012-02-21');
+    $date = Calendar::parse('2012-02-21');
     // years may be negative and leading zeroes are ignored
-    $date = Date::parse('-5000-2-000001'); // works too!
+    $date = Calendar::parse('-5000-2-000001'); // works too!
 
 Getters
 =======
@@ -33,13 +33,13 @@ There are getters for day, month, year, string representation and array represen
 
     <?php
 
-    use Arokettu\Date\Date;
+    use Arokettu\Date\Calendar;
 
-    $date = Date::parse('2012-12-21');
+    $date = Calendar::parse('2012-12-21');
 
     $date->getDay(); // 21
     $date->getMonth(); // Month::December
     $date->getMonthNumber(); // 12
     $date->getYear(); // 2012
     $date->getDateArray(); // [$y, $m, $d]: [2012, 12, 24]
-    $date->toString; // Y-m-d: 2012-12-24
+    $date->toString(); // Y-m-d: 2012-12-24
