@@ -4,43 +4,52 @@ declare(strict_types=1);
 
 namespace Arokettu\Date;
 
-use DateTimeImmutable;
-use DateTimeInterface;
-use DateTimeZone;
 use DomainException;
 
-/**
- * Gregorian calendar and DateTime interoperability
- */
-final readonly class Calendar
+final readonly class MilankovicCalendar
 {
+    private const Y900_DAYS = 328718;
+    private const Y900_YEARS = 900;
+    private const BASE_DAY = 1721119; // 0-2-28 Milankovic
+
     // ymd factory
 
-    private static function fromGregorianRaw(int $y, int $m, int $d): Date
+    private static function fromMilankovicRaw(int $y, int $m, int $d): Date
     {
-        // normalize to 0..400 years (146097 days)
+        // normalize to 0..900 years (328718 days)
         if ($y >= 0) {
-            $c1 = intdiv($y, 400);
+            $c1 = intdiv($y, self::Y900_YEARS);
             $c2 = 0;
         } else {
             // this insane code here is to avoid int overflow on PHP_INT_MIN
-            // because simple logic with $c1 * 146097 may overflow, so we split one correction with two
+            // because simple logic with $c1 * 328718 may overflow, so we split one correction with two
             // that's guaranteed to be in range as long as the final result is in range
-            $c1 = intdiv($y, 400) - 1;
+            $c1 = intdiv($y, self::Y900_YEARS) - 1;
             $c2 = intdiv($c1, 2);
             $c1 -= $c2;
         }
-        $y -= ($c1 + $c2) * 400;
+        $y -= ($c1 + $c2) * self::Y900_YEARS;
 
-        // https://en.wikipedia.org/wiki/Julian_day#Converting_Gregorian_calendar_date_to_Julian_Day_Number
-        $monthCorrection = intdiv($m - 14, 12);
+        $m -= 3; // 0 = March
+        if ($m < 0) {
+            $y -= 1;
+            $m += 12;
+        }
+        if ($y < 0) {
+            $c1 -= 1;
+            $y += self::Y900_YEARS;
+        }
+        $c = intdiv($y, 100);
+        $yc = $y % 100;
         $julianDay =
-            intdiv(1461 * ($y + 4800 + $monthCorrection), 4) +
-            intdiv(367 * ($m - 2 - 12 * $monthCorrection), 12) -
-            intdiv(3 * (intdiv($y + 4900 + $monthCorrection, 100)), 4) +
-            $d - 32075;
-        $julianDay += $c1 * 146097;
-        $julianDay += $c2 * 146097;
+            intdiv(self::Y900_DAYS * $c + 6, 9) +
+            intdiv(36525 * $yc, 100) +
+            intdiv(153 * $m + 2, 5) +
+            $d + self::BASE_DAY;
+
+        // apply back correction
+        $julianDay += $c1 * self::Y900_DAYS;
+        $julianDay += $c2 * self::Y900_DAYS;
 
         if (\is_integer($julianDay) === false) {
             throw new DomainException('Date value overflow');
@@ -60,13 +69,13 @@ final readonly class Calendar
             $mi = $m;
         }
 
-        $days = $mo->gregorianDays($y);
+        $days = $mo->milankovicDays($y);
 
         if ($d < 1 || $d > $days) {
             throw new DomainException("For year $y month $mi, day must be in range 1-$days");
         }
 
-        return self::fromGregorianRaw($y, $mi, $d);
+        return self::fromMilankovicRaw($y, $mi, $d);
     }
 
     public static function parse(string $string): Date
@@ -83,21 +92,5 @@ final readonly class Calendar
         [/* $_ */, $y, $m, $d] = $matches;
 
         return self::create(\intval($y), \intval($m), \intval($d));
-    }
-
-    // DateTime conversion
-
-    public static function fromDateTime(DateTimeInterface $dateTime): Date
-    {
-        $y = \intval($dateTime->format('Y'));
-        $m = \intval($dateTime->format('m'));
-        $d = \intval($dateTime->format('d'));
-
-        return self::fromGregorianRaw($y, $m, $d);
-    }
-
-    public static function parseDateTimeString(string $string, ?DateTimeZone $timeZone = null): Date
-    {
-        return self::fromDateTime(new DateTimeImmutable($string, $timeZone));
     }
 }

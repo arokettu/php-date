@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Arokettu\Date;
 
 use Arokettu\Date\Helpers\YearHelper;
+use LogicException;
 
 enum Month: int
 {
@@ -21,7 +22,7 @@ enum Month: int
     case November = 11;
     case December = 12;
 
-    public function days(int $year): int
+    private function days(): int
     {
         return match ($this) {
             self::January, self::March, self::May, self::July, self::August, self::October, self::December,
@@ -29,19 +30,37 @@ enum Month: int
             self::April, self::June, self::September, self::November,
                 => 30,
             self::February,
-                => YearHelper::isLeap($year) ? 29 : 28,
+                => throw new LogicException('Must be handled before this method'),
+        };
+    }
+
+    public function gregorianDays(int $year): int
+    {
+        return match ($this) {
+            self::February,
+                => YearHelper::isGregorianLeap($year) ? 29 : 28,
+            default
+                => $this->days(),
         };
     }
 
     public function julianDays(int $year): int
     {
         return match ($this) {
-            self::January, self::March, self::May, self::July, self::August, self::October, self::December,
-                => 31,
-            self::April, self::June, self::September, self::November,
-                => 30,
             self::February,
                 => YearHelper::isJulianLeap($year) ? 29 : 28,
+            default
+                => $this->days(),
+        };
+    }
+
+    public function milankovicDays(int $year): int
+    {
+        return match ($this) {
+            self::February,
+                => YearHelper::isMilankovicLeap($year) ? 29 : 28,
+            default
+                => $this->days(),
         };
     }
 }
