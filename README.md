@@ -30,19 +30,24 @@ The library:
 ```php
 <?php
 
+use Arokettu\Date\Calendar;
 use Arokettu\Date\Date;
+use Arokettu\Date\JulianCalendar;
 use Arokettu\Date\Month;
 
 // creation
 $date = Date::today(); // example: 2024-02-27
 // or
-$date = Date::create(2024, Month::February, 27);
+$date = Calendar::create(2024, Month::February, 27);
 // or
-$date = Date::fromDateTime(new DateTime('Feb 27, 2024')); // truncates time
+$date = Calendar::fromDateTime(new DateTime('Feb 27, 2024')); // truncates time
 // or
-$date = Date::parse('2024-02-27'); // Y-m-d is expected, years can be negative
+$date = Calendar::parse('2024-02-27'); // Y-m-d is expected, years can be negative
 // or
-$date = Date::parseDateTimeString('Feb 27, 2024');
+$date = Calendar::parseDateTimeString('Feb 27, 2024');
+
+// alternative calendars
+$date = JulianCalendar::parse('2024-02-14');
 
 // getters
 $date->getDay(); // 27
@@ -53,6 +58,10 @@ $date->getWeekDay(); // WeekDay::Tuesday
 $date->getJulianDay(); // 2460368
 $date->toDateTime(); // DateTimeImmutable('2024-02-27') // midnight in a default timezone
 $date->toString(); // "2024-02-27"
+
+// alternative calendar getters
+$date->julian()->getDay(); // 14
+$date->julian()->toString(); // "2024-02-14"
 ```
 
 ## Installation
