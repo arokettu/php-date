@@ -15,7 +15,7 @@ use WeakMap;
 final readonly class Date implements Stringable
 {
     public function __construct(
-        private int $julianDay,
+        public int $julianDay,
     ) {
     }
 
@@ -218,9 +218,21 @@ final readonly class Date implements Stringable
         return new self($this->julianDay - $days);
     }
 
-    public function sub(Date $date): int
+    public function sub(Date|Calendars\CalendarDateInterface $date): int
     {
+        if ($date instanceof Calendars\CalendarDateInterface) {
+            $date = $date->getDate();
+        }
+
         return $this->julianDay - $date->julianDay;
+    }
+
+    // alternative calendars
+
+    public function julian(): Calendars\JulianDate
+    {
+        CacheHelper::$julianDateObject ??= new WeakMap();
+        return CacheHelper::$julianDateObject[$this] ??= new Calendars\JulianDate($this);
     }
 
     // magic
