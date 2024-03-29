@@ -151,6 +151,12 @@ final readonly class Date implements Stringable
         return CacheHelper::$julianDateObject[$this] ??= new Calendars\JulianCalendarDate($this);
     }
 
+    public function milankovic(): Calendars\MilankovicDate
+    {
+        CacheHelper::$milankovicDateObject ??= new WeakMap();
+        return CacheHelper::$milankovicDateObject[$this] ??= new Calendars\MilankovicDate($this);
+    }
+
     // magic
 
     public function __serialize(): array
@@ -171,9 +177,10 @@ final readonly class Date implements Stringable
     public function __debugInfo(): array
     {
         return [
-            'julianDay' => $this->julianDay,
-            'gregorian' => $this->toString(),
-            'julian' => $this->julian()->toString(),
+            'julianDay'     => $this->julianDay,
+            'gregorian'     => $this->toString(),
+            'julian'        => $this->julian()->toString(),
+            'milankovic'    => $this->milankovic()->toString(),
         ];
     }
 }

@@ -4,18 +4,11 @@ declare(strict_types=1);
 
 namespace Arokettu\Date\Calendars;
 
-use Arokettu\Date\Date;
-use Arokettu\Date\Month;
 use Stringable;
 
 final readonly class JulianCalendarDate implements Stringable
 {
-    private array $dateArray;
-
-    public function __construct(
-        public Date $date,
-    ) {
-    }
+    use GregorianLikeDate;
 
     public function getDateArray(): array
     {
@@ -45,38 +38,5 @@ final readonly class JulianCalendarDate implements Stringable
         $y = intdiv($e, 1461) - 4716 + intdiv(12 + 2 - $m, 12);
 
         return $this->dateArray = [$y + $c * 700, $m, $d];
-    }
-
-    public function getYear(): int
-    {
-        return $this->getDateArray()[0];
-    }
-
-    public function getMonth(): Month
-    {
-        return Month::from($this->getDateArray()[1]);
-    }
-
-    public function getMonthNumber(): int
-    {
-        return $this->getDateArray()[1];
-    }
-
-    public function getDay(): int
-    {
-        return $this->getDateArray()[2];
-    }
-
-    // string conversion
-
-    public function toString(): string
-    {
-        $ymd = $this->getDateArray();
-        return sprintf("%d-%02d-%02d", $ymd[0], $ymd[1], $ymd[2]);
-    }
-
-    public function __toString(): string
-    {
-        return $this->toString();
     }
 }

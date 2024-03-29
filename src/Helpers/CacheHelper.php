@@ -14,9 +14,10 @@ final class CacheHelper
 {
     public static ClockInterface $clock;
 
-    // gregorian
+    // gregorian y-m-d
     public static WeakMap $dateArray;
 
-    // julian
+    // calendars
     public static WeakMap $julianDateObject;
+    public static WeakMap $milankovicDateObject;
 }
