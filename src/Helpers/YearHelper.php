@@ -33,6 +33,9 @@ final class YearHelper
         }
         // century div 9 must be 2 or 6
         $cq = intdiv($y, 100) % 9;
+        if ($cq < 0) {
+            $cq += 9;
+        }
         return $cq === 2 || $cq === 6;
     }
 }

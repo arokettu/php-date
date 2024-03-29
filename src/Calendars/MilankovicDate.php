@@ -28,7 +28,7 @@ final readonly class MilankovicDate implements Stringable
             $j -= $c * self::Y900_DAYS;
         } else {
             // prevent int_min overflow
-            $c1 = intdiv($c,2);
+            $c1 = intdiv($c, 2);
             $c2 = $c - $c1;
             $j -= $c1 * self::Y900_DAYS;
             $j -= $c2 * self::Y900_DAYS;

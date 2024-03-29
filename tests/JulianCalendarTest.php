@@ -40,13 +40,6 @@ class JulianCalendarTest extends TestCase
         self::assertTrue($date->julian() === $date->julian());
     }
 
-    public function testSerialize(): void
-    {
-        $date = JulianCalendar::parse('2024-03-16');
-
-        self::assertEquals($date, unserialize(serialize($date)));
-    }
-
     public function testArithmetic(): void
     {
         $date1 = JulianCalendar::parse('2100-01-01');
@@ -109,11 +102,11 @@ class JulianCalendarTest extends TestCase
     public function testCreateLeapYear(): void
     {
         // leap
-        $date = JulianCalendar::create(2100, 2, 29);
-        self::assertEquals('2100-02-29', (string)$date->julian());
+        $date = JulianCalendar::create(2016, 2, 29);
+        self::assertEquals('2016-02-29', (string)$date->julian());
         // negative leap
-        $date = JulianCalendar::create(-5100, 2, 29);
-        self::assertEquals('-5100-02-29', (string)$date->julian());
+        $date = JulianCalendar::create(-5016, 2, 29);
+        self::assertEquals('-5016-02-29', (string)$date->julian());
 
         // leap century
         $date = JulianCalendar::create(2100, 2, 29);

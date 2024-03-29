@@ -25,6 +25,7 @@ class MagicMethodsTest extends TestCase
             'julianDay' => 2345678,
             'gregorian' => '1710-02-23',
             'julian' => '1710-02-12',
+            'milankovic' => '1710-02-23',
         ], $date->__debugInfo());
     }
 
