@@ -10,6 +10,7 @@ use Arokettu\Date\WeekDay;
 interface CalendarDateInterface
 {
     public function getDate(): Date;
+    public function getJulianDay(): int;
 
     public function getWeekDay(): WeekDay;
     public function getWeekDayNumber(): int;

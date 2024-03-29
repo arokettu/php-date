@@ -32,6 +32,9 @@ class ArithmeticTest extends TestCase
         $date1 = Date::create(2024, 2, 25);
         $date2 = Date::create(2024, 6, 4);
 
+        // same class
         self::assertEquals(100, $date2->sub($date1));
+        // custom calendar
+        self::assertEquals(100, $date2->sub($date1->julian()));
     }
 }

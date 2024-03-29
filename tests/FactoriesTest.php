@@ -114,7 +114,7 @@ class FactoriesTest extends TestCase
 
     public function testJulianDay(): void
     {
-        $date = Date::createJulianDay(2500000);
+        $date = Date::createFromJulianDay(2500000);
 
         self::assertEquals('2132-08-31', (string)$date);
     }

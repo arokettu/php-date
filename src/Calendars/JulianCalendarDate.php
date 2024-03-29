@@ -75,7 +75,7 @@ final readonly class JulianCalendarDate implements CalendarDateInterface
 
     // ymd factory
 
-    private static function fromJulianRaw(int $y, int $m, int $d): Date
+    private static function fromJulianRaw(int $y, int $m, int $d): self
     {
         // normalize to 0..700 years (255675 days)
         if ($y >= 0) {
@@ -104,10 +104,10 @@ final readonly class JulianCalendarDate implements CalendarDateInterface
             throw new DomainException('Date value overflow');
         }
 
-        return new Date($julianDay);
+        return new self(new Date($julianDay));
     }
 
-    public static function create(int $y, Month|int $m, int $d): Date
+    public static function create(int $y, Month|int $m, int $d): self
     {
         if ($m instanceof Month) {
             $mo = $m;
@@ -127,12 +127,12 @@ final readonly class JulianCalendarDate implements CalendarDateInterface
         return self::fromJulianRaw($y, $mi, $d);
     }
 
-    public static function parse(string $string): Date
+    public static function parse(string $string): self
     {
         return self::fromString($string);
     }
 
-    public static function fromString(string $string): Date
+    public static function fromString(string $string): self
     {
         if (!preg_match('/(-?\d+)-(\d+)-(\d+)/', $string, $matches)) {
             throw new DomainException('Unable to parse the date string: ' . $string);

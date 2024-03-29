@@ -26,7 +26,16 @@ final readonly class Date implements Stringable
         return $this->julianDay;
     }
 
+    /**
+     * @deprecated Use self::createFromJulianDay()
+     * @codeCoverageIgnore
+     */
     public static function createJulianDay(int $julianDay): self
+    {
+        return self::createFromJulianDay($julianDay);
+    }
+
+    public static function createFromJulianDay(int $julianDay): self
     {
         return new self($julianDay);
     }

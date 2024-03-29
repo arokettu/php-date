@@ -22,6 +22,18 @@ trait CalendarDateTrait
         return $this->date;
     }
 
+    // Julian day
+
+    public function getJulianDay(): int
+    {
+        return $this->date->julianDay;
+    }
+
+    public static function createFromJulianDay(int $julianDay): self
+    {
+        return new self(new Date($julianDay));
+    }
+
     // weekday
 
     public function getWeekDay(): WeekDay
