@@ -2,7 +2,11 @@
 
 ## 2.x
 
-### next
+### 2.0.0
+
+*Mar 29, 2024*
+
+Forked from 1.0.0
 
 * Moved factories to the ``Calendar`` class
   * ``Date::create()`` -> ``Calendar::create()``
