@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Arokettu\Date\Tests;
 
-use Arokettu\Date\Date;
+use Arokettu\Date\Calendar;
 use PHPUnit\Framework\TestCase;
 
 class GregorianEdgeCasesTest extends TestCase
@@ -12,48 +12,48 @@ class GregorianEdgeCasesTest extends TestCase
     public function testLeapYears(): void
     {
         // non leap
-        $date = Date::create(2014, 2, 28);
+        $date = Calendar::create(2014, 2, 28);
         self::assertEquals('2014-03-01', (string)$date->add(1));
         // negative non leap
-        $date = Date::create(-5014, 2, 28);
+        $date = Calendar::create(-5014, 2, 28);
         self::assertEquals('-5014-03-01', (string)$date->add(1));
 
         // leap
-        $date = Date::create(2016, 2, 28);
+        $date = Calendar::create(2016, 2, 28);
         self::assertEquals('2016-02-29', (string)$date->add(1));
         // negative leap
-        $date = Date::create(-5016, 2, 28);
+        $date = Calendar::create(-5016, 2, 28);
         self::assertEquals('-5016-02-29', (string)$date->add(1));
 
         // non leap century
-        $date = Date::create(1900, 2, 28);
+        $date = Calendar::create(1900, 2, 28);
         self::assertEquals('1900-03-01', (string)$date->add(1));
         // negative non leap century
-        $date = Date::create(-5000, 2, 28);
+        $date = Calendar::create(-5000, 2, 28);
         self::assertEquals('-5000-03-01', (string)$date->add(1));
 
         // leap century
-        $date = Date::create(2400, 2, 28);
+        $date = Calendar::create(2400, 2, 28);
         self::assertEquals('2400-02-29', (string)$date->add(1));
         // negative leap century
-        $date = Date::create(-5200, 2, 28);
+        $date = Calendar::create(-5200, 2, 28);
         self::assertEquals('-5200-02-29', (string)$date->add(1));
     }
 
     public function testCreateLeapYear(): void
     {
         // leap
-        $date = Date::create(2016, 2, 29);
+        $date = Calendar::create(2016, 2, 29);
         self::assertEquals('2016-02-29', (string)$date);
         // negative leap
-        $date = Date::create(-5016, 2, 29);
+        $date = Calendar::create(-5016, 2, 29);
         self::assertEquals('-5016-02-29', (string)$date);
 
         // leap century
-        $date = Date::create(2400, 2, 29);
+        $date = Calendar::create(2400, 2, 29);
         self::assertEquals('2400-02-29', (string)$date);
         // negative leap century
-        $date = Date::create(-5200, 2, 29);
+        $date = Calendar::create(-5200, 2, 29);
         self::assertEquals('-5200-02-29', (string)$date);
     }
 
@@ -62,7 +62,7 @@ class GregorianEdgeCasesTest extends TestCase
         $this->expectException(\DomainException::class);
         $this->expectExceptionMessage('For year 2014 month 2, day must be in range 1-28');
 
-        Date::create(2014, 2, 29);
+        Calendar::create(2014, 2, 29);
     }
 
     public function testCreateLeapYearNonLeapNeg(): void
@@ -70,7 +70,7 @@ class GregorianEdgeCasesTest extends TestCase
         $this->expectException(\DomainException::class);
         $this->expectExceptionMessage('For year -5014 month 2, day must be in range 1-28');
 
-        Date::create(-5014, 2, 29);
+        Calendar::create(-5014, 2, 29);
     }
 
     public function testCreateLeapYearNonLeapCentury(): void
@@ -78,7 +78,7 @@ class GregorianEdgeCasesTest extends TestCase
         $this->expectException(\DomainException::class);
         $this->expectExceptionMessage('For year 1900 month 2, day must be in range 1-28');
 
-        Date::create(1900, 2, 29);
+        Calendar::create(1900, 2, 29);
     }
 
     public function testCreateLeapYearNonLeapCenturyNeg(): void
@@ -86,6 +86,6 @@ class GregorianEdgeCasesTest extends TestCase
         $this->expectException(\DomainException::class);
         $this->expectExceptionMessage('For year -5000 month 2, day must be in range 1-28');
 
-        Date::create(-5000, 2, 29);
+        Calendar::create(-5000, 2, 29);
     }
 }

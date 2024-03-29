@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace Arokettu\Date;
 
+use Arokettu\Clock\SystemClock;
 use Arokettu\Date\Helpers\CacheHelper;
 use DateTimeImmutable;
-use DateTimeInterface;
 use DateTimeZone;
-use DomainException;
+use Psr\Clock\ClockInterface;
 use Stringable;
 use WeakMap;
 
@@ -24,15 +24,6 @@ final readonly class Date implements Stringable
     public function getJulianDay(): int
     {
         return $this->julianDay;
-    }
-
-    /**
-     * @deprecated Use self::createFromJulianDay()
-     * @codeCoverageIgnore
-     */
-    public static function createJulianDay(int $julianDay): self
-    {
-        return self::createFromJulianDay($julianDay);
     }
 
     public static function createFromJulianDay(int $julianDay): self
@@ -112,92 +103,17 @@ final readonly class Date implements Stringable
         return sprintf("%d-%02d-%02d", $ymd[0], $ymd[1], $ymd[2]);
     }
 
-    // ymd factory
-
-    private static function fromGregorianRaw(int $y, int $m, int $d): self
+    public static function today(?DateTimeZone $timeZone = null, ?ClockInterface $clock = null): self
     {
-        // normalize to 0..400 years (146097 days)
-        if ($y >= 0) {
-            $c1 = intdiv($y, 400);
-            $c2 = 0;
-        } else {
-            // this insane code here is to avoid int overflow on PHP_INT_MIN
-            // because simple logic with $c1 * 146097 may overflow, so we split one correction with two
-            // that's guaranteed to be in range as long as the final result is in range
-            $c1 = intdiv($y, 400) - 1;
-            $c2 = intdiv($c1, 2);
-            $c1 -= $c2;
+        CacheHelper::$clock ??= new SystemClock();
+        $now = ($clock ?? CacheHelper::$clock)->now();
+        if ($timeZone) {
+            $now = $now->setTimezone($timeZone);
         }
-        $y -= ($c1 + $c2) * 400;
-
-        // https://en.wikipedia.org/wiki/Julian_day#Converting_Gregorian_calendar_date_to_Julian_Day_Number
-        $monthCorrection = intdiv($m - 14, 12);
-        $julianDay =
-            intdiv(1461 * ($y + 4800 + $monthCorrection), 4) +
-            intdiv(367 * ($m - 2 - 12 * $monthCorrection), 12) -
-            intdiv(3 * (intdiv($y + 4900 + $monthCorrection, 100)), 4) +
-            $d - 32075;
-        $julianDay += $c1 * 146097;
-        $julianDay += $c2 * 146097;
-
-        if (\is_integer($julianDay) === false) {
-            throw new DomainException('Date value overflow');
-        }
-
-        return new self($julianDay);
-    }
-
-    public static function today(?DateTimeZone $timeZone = null): self
-    {
-        return self::fromDateTime(new DateTimeImmutable('now', $timeZone));
-    }
-
-    public static function create(int $y, Month|int $m, int $d): self
-    {
-        if ($m instanceof Month) {
-            $mo = $m;
-            $mi = $m->value;
-        } else {
-            $mo = Month::tryFrom($m) ??
-                throw new DomainException('Month must be an instance of Month or an integer 1-12');
-            $mi = $m;
-        }
-
-        $days = $mo->days($y);
-
-        if ($d < 1 || $d > $days) {
-            throw new DomainException("For year $y month $mi, day must be in range 1-$days");
-        }
-
-        return self::fromGregorianRaw($y, $mi, $d);
-    }
-
-    public static function parse(string $string): self
-    {
-        return self::fromString($string);
-    }
-
-    public static function fromString(string $string): self
-    {
-        if (!preg_match('/(-?\d+)-(\d+)-(\d+)/', $string, $matches)) {
-            throw new DomainException('Unable to parse the date string: ' . $string);
-        }
-
-        [/* $_ */, $y, $m, $d] = $matches;
-
-        return self::create(\intval($y), \intval($m), \intval($d));
+        return Calendar::fromDateTime($now);
     }
 
     // DateTime conversion
-
-    public static function fromDateTime(DateTimeInterface $dateTime): self
-    {
-        $y = \intval($dateTime->format('Y'));
-        $m = \intval($dateTime->format('m'));
-        $d = \intval($dateTime->format('d'));
-
-        return self::fromGregorianRaw($y, $m, $d);
-    }
 
     public function toDateTime(?DateTimeZone $timeZone = null): DateTimeImmutable
     {
@@ -205,14 +121,9 @@ final readonly class Date implements Stringable
         return (new DateTimeImmutable('today', $timeZone))->setDate($ymd[0], $ymd[1], $ymd[2]);
     }
 
-    public static function parseDateTimeString(string $string, ?DateTimeZone $timeZone = null): self
+    public function formatDateTime(string $format, ?DateTimeZone $timeZone = null): string
     {
-        return self::fromDateTime(new DateTimeImmutable($string, $timeZone));
-    }
-
-    public function formatDateTime(string $format): string
-    {
-        return $this->toDateTime()->format($format);
+        return $this->toDateTime($timeZone)->format($format);
     }
 
     // arithmetic
@@ -227,12 +138,8 @@ final readonly class Date implements Stringable
         return new self($this->julianDay - $days);
     }
 
-    public function sub(Date|Calendars\CalendarDateInterface $date): int
+    public function sub(Date $date): int
     {
-        if ($date instanceof Calendars\CalendarDateInterface) {
-            $date = $date->getDate();
-        }
-
         return $this->julianDay - $date->julianDay;
     }
 
@@ -264,8 +171,9 @@ final readonly class Date implements Stringable
     public function __debugInfo(): array
     {
         return [
-            'date' => $this->toString(),
             'julianDay' => $this->julianDay,
+            'gregorian' => $this->toString(),
+            'julian' => $this->julian()->toString(),
         ];
     }
 }

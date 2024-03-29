@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Arokettu\Date\Tests;
 
+use Arokettu\Date\Calendar;
 use Arokettu\Date\Date;
 use Arokettu\Date\WeekDay;
 use PHPUnit\Framework\TestCase;
@@ -16,7 +17,7 @@ class RangeEdgeCasesTest extends TestCase
         self::assertEquals('-4713-11-24', (string)$date1); // Jan 1, 4713 BCE (-4712) Julian
         self::assertEquals(WeekDay::Monday, $date1->getWeekDay());
 
-        $date2 = Date::create(-4713, 11, 24);
+        $date2 = Calendar::create(-4713, 11, 24);
         self::assertEquals($date1, $date2);
     }
 
@@ -30,7 +31,7 @@ class RangeEdgeCasesTest extends TestCase
         self::assertEquals('25252734927761842-06-20', (string)$date1);
         self::assertEquals(WeekDay::Monday, $date1->getWeekDay());
 
-        $date2 = Date::create(25252734927761842, 6, 20);
+        $date2 = Calendar::create(25252734927761842, 6, 20);
         self::assertEquals($date1, $date2);
     }
 
@@ -44,7 +45,7 @@ class RangeEdgeCasesTest extends TestCase
         self::assertEquals('-25252734927771267-04-30', (string)$date1);
         self::assertEquals(WeekDay::Sunday, $date1->getWeekDay());
 
-        $date2 = Date::create(-25252734927771267, 4, 30);
+        $date2 = Calendar::create(-25252734927771267, 4, 30);
         self::assertEquals($date1, $date2);
     }
 
@@ -54,7 +55,7 @@ class RangeEdgeCasesTest extends TestCase
         self::assertEquals('5874898-06-03', (string)$date1);
         self::assertEquals(WeekDay::Tuesday, $date1->getWeekDay());
 
-        $date2 = Date::create(5874898, 6, 3);
+        $date2 = Calendar::create(5874898, 6, 3);
         self::assertEquals($date1, $date2);
     }
 
@@ -64,7 +65,7 @@ class RangeEdgeCasesTest extends TestCase
         self::assertEquals('-5884323-05-15', (string)$date1);
         self::assertEquals(WeekDay::Saturday, $date1->getWeekDay());
 
-        $date2 = Date::create(-5884323, 5, 15);
+        $date2 = Calendar::create(-5884323, 5, 15);
         self::assertEquals($date1, $date2);
     }
 
@@ -77,7 +78,7 @@ class RangeEdgeCasesTest extends TestCase
         $this->expectException(\DomainException::class);
         $this->expectExceptionMessage('Date value overflow');
 
-        Date::create(25252734927761842, 6, 21);
+        Calendar::create(25252734927761842, 6, 21);
     }
 
     public function testMinOverflow(): void
@@ -89,6 +90,6 @@ class RangeEdgeCasesTest extends TestCase
         $this->expectException(\DomainException::class);
         $this->expectExceptionMessage('Date value overflow');
 
-        Date::create(-25252734927771267, 4, 29);
+        Calendar::create(-25252734927771267, 4, 29);
     }
 }

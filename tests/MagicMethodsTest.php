@@ -21,7 +21,11 @@ class MagicMethodsTest extends TestCase
     {
         $date = new Date(2345678);
 
-        self::assertEquals(['date' => '1710-02-23', 'julianDay' => 2345678], $date->__debugInfo());
+        self::assertEquals([
+            'julianDay' => 2345678,
+            'gregorian' => '1710-02-23',
+            'julian' => '1710-02-12',
+        ], $date->__debugInfo());
     }
 
     public function testToString(): void
