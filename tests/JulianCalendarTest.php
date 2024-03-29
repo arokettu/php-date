@@ -23,6 +23,16 @@ class JulianCalendarTest extends TestCase
         self::assertEquals(2024, $date->julian()->getYear());
     }
 
+    public function testFactories(): void
+    {
+        $date1 = JulianCalendar::parse('2024-03-16');
+        $date2 = JulianCalendar::create(2024, 3, 16);
+        $date3 = JulianCalendar::create(2024, Month::March, 16);
+
+        self::assertEquals($date1, $date2);
+        self::assertEquals($date1, $date3);
+    }
+
     public function testSameInstance(): void
     {
         $date = Date::today();
@@ -127,5 +137,37 @@ class JulianCalendarTest extends TestCase
         $this->expectExceptionMessage('For year -5014 month 2, day must be in range 1-28');
 
         JulianCalendar::create(-5014, 2, 29);
+    }
+
+    public function testParserInvalidFormat(): void
+    {
+        $this->expectException(\DomainException::class);
+        $this->expectExceptionMessage('Unable to parse the date string: 2015/12/12');
+
+        JulianCalendar::parse('2015/12/12'); // Only Y-m-d is accepted
+    }
+
+    public function testParserInvalidValue(): void
+    {
+        $this->expectException(\DomainException::class);
+        $this->expectExceptionMessage('For year 2015 month 2, day must be in range 1-28');
+
+        JulianCalendar::parse('2015-002-42');
+    }
+
+    public function testDateWrongMonth(): void
+    {
+        $this->expectException(\DomainException::class);
+        $this->expectExceptionMessage('Month must be an instance of Month or an integer 1-12');
+
+        JulianCalendar::create(2000, 13, 13);
+    }
+
+    public function testDateWrongDay(): void
+    {
+        $this->expectException(\DomainException::class);
+        $this->expectExceptionMessage('For year 2000 month 11, day must be in range 1-30');
+
+        JulianCalendar::create(2000, 11, 33);
     }
 }
