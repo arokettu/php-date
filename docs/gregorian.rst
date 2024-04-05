@@ -3,6 +3,9 @@ Gregorian Calendar
 
 .. highlight:: php
 
+.. note::
+    Gregorian calendar: https://en.wikipedia.org/wiki/Gregorian_calendar
+
 Proleptic Gregorian calendar is the default calendar of the library.
 Years are assumed to be in the astronomical notation. (``1 AD`` is ``1``, ``1 BC`` is ``0``, ``2 BC`` is ``-1``)
 The date range is ``-5884323-05-15`` to ``5874898-06-03`` for a 32-bit system

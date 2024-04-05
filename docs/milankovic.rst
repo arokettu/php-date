@@ -3,6 +3,9 @@ Revised Julian (Milanković) Calendar
 
 .. highlight:: php
 
+.. note::
+    Revised Julian calendar: https://en.wikipedia.org/wiki/Revised_Julian_calendar
+
 Proleptic Revised Julian calendar is implemented by ``milankovic()`` helper and ``MilankovicCalendar`` factory.
 Years are assumed to be in the astronomical notation. (``1 AD`` is ``1``, ``1 BC`` is ``0``, ``2 BC`` is ``-1``)
 The date range is ``-5884328-11-22`` to ``5874902-11-21`` for a 32-bit system

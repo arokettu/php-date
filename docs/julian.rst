@@ -3,6 +3,9 @@ Julian Calendar
 
 .. highlight:: php
 
+.. note::
+    Julian calendar: https://en.wikipedia.org/wiki/Julian_calendar
+
 Proleptic Julian calendar is implemented by ``julian()`` helper and ``JulianCalendar`` factory.
 Years are assumed to be in the astronomical notation. (``1 AD`` is ``1``, ``1 BC`` is ``0``, ``2 BC`` is ``-1``)
 The date range is ``-5884202-03-16`` to ``5874777-10-17`` for a 32-bit system

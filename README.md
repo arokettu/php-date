@@ -17,8 +17,8 @@
 
 A class for php to work with pure dates (without time).
 
-* Works with the proleptic Gregorian calendar by default
-* Uses Julian day internally
+* Works with the proleptic [Gregorian calendar](https://en.wikipedia.org/wiki/Gregorian_calendar) by default
+* Uses [Julian day](https://en.wikipedia.org/wiki/Julian_day) internally
 * Does not depend on the calendar extension
 * Correctly supports full integer range for the dates
   (-5884323-05-15 to 5874898-06-03 on a 32-bit system, even more on 64-bit)
