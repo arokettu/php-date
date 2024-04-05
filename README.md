@@ -21,7 +21,10 @@ A class for php to work with pure dates (without time).
 * Uses Julian day internally
 * Does not depend on the calendar extension
 * Correctly supports full integer range for the dates
-  (-5884323-05-15 to 5874898-06-03 on a 32-bit system, even more on 64-bit) 
+  (-5884323-05-15 to 5874898-06-03 on a 32-bit system, even more on 64-bit)
+* Additional calendars:
+  * [Julian](https://en.wikipedia.org/wiki/Julian_calendar)
+  * [Revised Julian (Milanković)](https://en.wikipedia.org/wiki/Revised_Julian_calendar)
 
 ## Usage
 
