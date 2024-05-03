@@ -20,6 +20,7 @@ Documentation
 
    common
    gregorian
+   isoweek
    julian
    milankovic
    julian_date
