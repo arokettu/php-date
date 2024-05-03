@@ -79,6 +79,8 @@ Create an instance of Date from an instance of DateTimeInterface or by using Dat
     $date = Calendar::parseDateTimeString('Feb 28, 2024');
     // or any other expression DateTime supports:
     $date = Calendar::parseDateTimeString('tomorrow');
+    // including iso week date:
+    $date = Calendar::parseDateTimeString('2021-W36-7');
 
 Export
 ------
@@ -97,3 +99,6 @@ Also a formatter shortcut is available::
     $date->formatDateTime('m/d/y');
     // equivalent to
     $date->getDateTime()->format('m/d/y');
+
+    // note that it can handle ISO week date too:
+    $date->formatDateTime('o-\\WW-N');

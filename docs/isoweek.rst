@@ -11,6 +11,9 @@ Years are assumed to be in the astronomical notation. (``1 AD`` is ``1``, ``1 BC
 The date range is ``-5884323-W19-6`` to ``5874898-W23-2`` for a 32-bit system
 and ``-25252734927771267-W17-7`` to ``25252734927761842-W25-1`` on a 64-bit system.
 
+.. note::
+    ISO week date is also supported by the native DateTime type and the IntlDateFormatter component
+
 Factories
 =========
 
