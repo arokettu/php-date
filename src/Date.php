@@ -145,6 +145,12 @@ final readonly class Date implements Stringable
 
     // alternative calendars
 
+    public function isoWeek(): Calendars\IsoWeekDate
+    {
+        CacheHelper::$isoWeekDateObject ??= new WeakMap();
+        return CacheHelper::$isoWeekDateObject[$this] ??= new Calendars\IsoWeekDate($this);
+    }
+
     public function julian(): Calendars\JulianCalendarDate
     {
         CacheHelper::$julianDateObject ??= new WeakMap();
@@ -178,7 +184,9 @@ final readonly class Date implements Stringable
     {
         return [
             'julianDay'     => $this->julianDay,
+            'weekDay'       => $this->getWeekDay()->name,
             'gregorian'     => $this->toString(),
+            'isoWeek'       => $this->isoWeek()->toString(),
             'julian'        => $this->julian()->toString(),
             'milankovic'    => $this->milankovic()->toString(),
         ];

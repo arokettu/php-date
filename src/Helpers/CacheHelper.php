@@ -18,6 +18,7 @@ final class CacheHelper
     public static WeakMap $dateArray;
 
     // calendars
+    public static WeakMap $isoWeekDateObject;
     public static WeakMap $julianDateObject;
     public static WeakMap $milankovicDateObject;
 }

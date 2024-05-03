@@ -26,6 +26,8 @@ class MagicMethodsTest extends TestCase
             'gregorian' => '1710-02-23',
             'julian' => '1710-02-12',
             'milankovic' => '1710-02-23',
+            'weekDay' => 'Sunday',
+            'isoWeek' => '1710-W08-7',
         ], $date->__debugInfo());
     }
 
