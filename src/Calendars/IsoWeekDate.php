@@ -45,12 +45,12 @@ final readonly class IsoWeekDate implements Stringable
         }
 
         // use a slightly different Gregorian algorithm that gives us day of the year as an intermediate step
-        $baseDay = $j - self::BASE_DAY;
-        $century = intdiv(self::Y4_YEARS * $baseDay - 1, self::Y400_DAYS);
-        $dayOfCentury = $baseDay - intdiv(self::Y400_DAYS * $century, 4);
+        $dayFromBase = $j - self::BASE_DAY;
+        $century = intdiv(self::Y4_YEARS * $dayFromBase - 1, self::Y400_DAYS);
+        $dayOfCentury = $dayFromBase - intdiv(self::Y400_DAYS * $century, 4);
 
         $yearOfCentury = intdiv(self::Y4_YEARS * $dayOfCentury, self::Y4_DAYS);
-        $dayOfYear = $dayOfCentury - intdiv(self::Y4_DAYS * $yearOfCentury, self::Y4_YEARS) + 1;
+        $dayOfYear = $dayOfCentury - intdiv(self::Y4_DAYS * $yearOfCentury - 1, self::Y4_YEARS);
 
         $year = 100 * $century + $yearOfCentury;
 
