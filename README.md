@@ -23,6 +23,7 @@ A class for php to work with pure dates (without time).
 * Correctly supports full integer range for the dates
   (-5884323-05-15 to 5874898-06-03 on a 32-bit system, even more on 64-bit)
 * Additional calendars:
+  * [ISO week date](https://en.wikipedia.org/wiki/ISO_week_date)
   * [Julian](https://en.wikipedia.org/wiki/Julian_calendar)
   * [Revised Julian (Milanković)](https://en.wikipedia.org/wiki/Revised_Julian_calendar)
 
