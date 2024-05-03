@@ -4,7 +4,7 @@ ISO Week Date
 .. highlight:: php
 
 .. note::
-    https://en.wikipedia.org/wiki/ISO_week_date
+    ISO week date: https://en.wikipedia.org/wiki/ISO_week_date
 
 ISO week date is implemented by ``isoWeek()`` helper and ``IsoWeekCalendar`` factory.
 Years are assumed to be in the astronomical notation. (``1 AD`` is ``1``, ``1 BC`` is ``0``, ``2 BC`` is ``-1``)
