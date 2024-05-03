@@ -6,6 +6,7 @@ namespace Arokettu\Date\Tests;
 
 use Arokettu\Date\Calendar;
 use Arokettu\Date\IsoWeekCalendar;
+use Arokettu\Date\WeekDay;
 use PHPUnit\Framework\TestCase;
 
 class IsoWeekTest extends TestCase
@@ -46,5 +47,101 @@ class IsoWeekTest extends TestCase
 
             self::assertEquals($date1, $date2);
         }
+    }
+
+    public function testGetters(): void
+    {
+        $date = IsoWeekCalendar::create(2024, 18, WeekDay::Friday);
+
+        self::assertEquals(2024, $date->isoWeek()->getYear());
+        self::assertEquals(18, $date->isoWeek()->getWeek());
+        self::assertEquals(WeekDay::Friday, $date->isoWeek()->getWeekDay());
+        self::assertEquals(5, $date->isoWeek()->getWeekDayNumber());
+    }
+
+    public function testParser(): void
+    {
+        $date = IsoWeekCalendar::create(2024, 18, WeekDay::Friday);
+        $dateNeg = IsoWeekCalendar::create(-2024, 18, WeekDay::Friday);
+
+        $date1 = IsoWeekCalendar::fromString('2024-W18-5');
+        $date2 = IsoWeekCalendar::fromString('2024-18-5'); // W is optional
+        $date3 = IsoWeekCalendar::fromString('-2024-W18-5'); // negative year is accepted
+        $date4 = IsoWeekCalendar::fromString('2024W185'); // no dashes
+        $date5 = IsoWeekCalendar::fromString('-2024W185'); // no dashes negative
+        $date6 = IsoWeekCalendar::fromString('0000002024-W00000018-005'); // leading zeros
+        $date7 = IsoWeekCalendar::fromString('00000002024W185'); // leading zeros for years
+
+        self::assertEquals($date, $date1);
+        self::assertEquals($date, $date2);
+        self::assertEquals($dateNeg, $date3);
+        self::assertEquals($date, $date4);
+        self::assertEquals($dateNeg, $date5);
+        self::assertEquals($date, $date6);
+        self::assertEquals($date, $date7);
+    }
+
+    public function testParserShortWRequired(): void
+    {
+        $this->expectException(\DomainException::class);
+        $this->expectExceptionMessage('Unable to parse the date string: 2024185');
+
+        IsoWeekCalendar::parse('2024185'); // W is required when no dashes
+    }
+
+    public function testParserShortWNoLeadingZeros(): void
+    {
+        $this->expectException(\DomainException::class);
+        $this->expectExceptionMessage('Unable to parse the date string: 2024W001805');
+
+        IsoWeekCalendar::parse('2024W001805'); // no leading zeros after W
+    }
+
+    public function testRangeDayBelow(): void
+    {
+        $this->expectException(\DomainException::class);
+        $this->expectExceptionMessage('Day must be an instance of WeekDay or an integer 1-7');
+
+        IsoWeekCalendar::create(2024, 20, 0);
+    }
+
+    public function testRangeDayAbove(): void
+    {
+        $this->expectException(\DomainException::class);
+        $this->expectExceptionMessage('Day must be an instance of WeekDay or an integer 1-7');
+
+        IsoWeekCalendar::create(2024, 20, 8);
+    }
+
+    public function testRangeMonthBelow(): void
+    {
+        $this->expectException(\DomainException::class);
+        $this->expectExceptionMessage('For year 2024, week must be in range 1-52');
+
+        IsoWeekCalendar::create(2024, 0, 5);
+    }
+
+    public function testRangeMonthAbove(): void
+    {
+        $this->expectException(\DomainException::class);
+        $this->expectExceptionMessage('For year 2024, week must be in range 1-52');
+
+        IsoWeekCalendar::create(2024, 53, 5);
+    }
+
+    public function testRangeMonthAboveLeap(): void
+    {
+        $this->expectException(\DomainException::class);
+        $this->expectExceptionMessage('For year 2020, week must be in range 1-53');
+
+        IsoWeekCalendar::create(2020, 54, 5);
+    }
+
+    public function testRangeMonthLeap(): void
+    {
+        $date = IsoWeekCalendar::create(2020, 53, 5);
+
+        self::assertEquals('2021-01-01', (string)$date);
+        self::assertEquals('2020-W53-5', (string)$date->isoWeek());
     }
 }
