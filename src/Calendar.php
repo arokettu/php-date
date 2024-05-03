@@ -76,7 +76,7 @@ final readonly class Calendar
 
     public static function fromString(string $string): Date
     {
-        if (!preg_match('/(-?\d+)-(\d+)-(\d+)/', $string, $matches)) {
+        if (!preg_match('/^(-?\d+)-(\d+)-(\d+)$/', $string, $matches)) {
             throw new DomainException('Unable to parse the date string: ' . $string);
         }
 

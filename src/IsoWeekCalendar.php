@@ -87,8 +87,8 @@ final readonly class IsoWeekCalendar
     public static function fromString(string $string): Date
     {
         if (
-            !preg_match('/(-?\d+)-W?(\d+)-(\d+)/i', $string, $matches) &&
-            !preg_match('/(-?\d+)W(\d{2})(\d)/i', $string, $matches)
+            !preg_match('/^(-?\d+)-W?(\d+)-(\d+)$/i', $string, $matches) &&
+            !preg_match('/^(-?\d+)W(\d{2})(\d)$/i', $string, $matches)
         ) {
             throw new DomainException('Unable to parse the date string: ' . $string);
         }
