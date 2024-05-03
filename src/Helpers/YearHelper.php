@@ -39,17 +39,25 @@ final class YearHelper
         return $cq === 2 || $cq === 6;
     }
 
-    private static function dowIsoYear(int $y): int
+    private static function wdIsoYear(int $y): int
     {
+        if ($y < 0) {
+            $y -= (intdiv($y, 400) - 1) * 400;
+        }
         return ($y + intdiv($y, 4) - intdiv($y, 100)  + intdiv($y, 400)) % 7;
+    }
+
+    public static function wdIsoYearJan4(int $y): int
+    {
+        return (self::wdIsoYear($y - 1) + 3) % 7 + 1;
     }
 
     public static function weeksInIsoYear(int $year): int
     {
-        if (self::dowIsoYear($year) === 4) { // year ends on Thursday
+        if (self::wdIsoYear($year) === 4) { // year ends on Thursday
             return 53;
         }
-        if (self::dowIsoYear($year - 1) === 3) { // prev year ends on Wednesday
+        if (self::wdIsoYear($year - 1) === 3) { // prev year ends on Wednesday
             return 53;
         }
         return 52;

@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Arokettu\Date\Tests;
 
 use Arokettu\Date\Calendar;
+use Arokettu\Date\IsoWeekCalendar;
 use PHPUnit\Framework\TestCase;
 
 class IsoWeekTest extends TestCase
@@ -37,8 +38,13 @@ class IsoWeekTest extends TestCase
         ];
 
         foreach ($dates as [$gregorian, $isoWeek]) {
-            $date = Calendar::fromString($gregorian);
-            self::assertEquals($isoWeek, $date->isoWeek()->toString());
+            $date1 = Calendar::fromString($gregorian);
+            self::assertEquals($isoWeek, $date1->isoWeek()->toString());
+
+            $date2 = IsoWeekCalendar::fromString($isoWeek);
+            self::assertEquals($gregorian, $date2->toString());
+
+            self::assertEquals($date1, $date2);
         }
     }
 }
