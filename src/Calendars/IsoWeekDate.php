@@ -33,7 +33,7 @@ final readonly class IsoWeekDate implements Stringable
         $j = $this->date->julianDay;
 
         // normalize to 0-400 years (146097 days)
-        $cycle = intdiv($j, self::Y400_DAYS) - 12;
+        $cycle = intdiv($j, self::Y400_DAYS) - 13;
         if ($cycle >= 0) {
             $j -= $cycle * self::Y400_DAYS;
         } else {
