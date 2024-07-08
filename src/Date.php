@@ -4,11 +4,9 @@ declare(strict_types=1);
 
 namespace Arokettu\Date;
 
-use Arokettu\Clock\SystemClock;
 use Arokettu\Date\Helpers\CacheHelper;
 use DateTimeImmutable;
 use DateTimeZone;
-use Psr\Clock\ClockInterface;
 use Stringable;
 use WeakMap;
 
@@ -103,14 +101,9 @@ final readonly class Date implements Stringable
         return sprintf("%d-%02d-%02d", $ymd[0], $ymd[1], $ymd[2]);
     }
 
-    public static function today(?DateTimeZone $timeZone = null, ?ClockInterface $clock = null): self
+    public static function today(?DateTimeZone $timeZone = null): self
     {
-        CacheHelper::$clock ??= new SystemClock();
-        $now = ($clock ?? CacheHelper::$clock)->now();
-        if ($timeZone) {
-            $now = $now->setTimezone($timeZone);
-        }
-        return Calendar::fromDateTime($now);
+        return Calendar::fromDateTime(new DateTimeImmutable('today', $timeZone));
     }
 
     // DateTime conversion
