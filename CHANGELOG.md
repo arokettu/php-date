@@ -2,6 +2,12 @@
 
 ## 2.x
 
+### 2.2.1
+
+*Jul 8, 2024*
+
+* Dropped dependency on `psr/clock`
+
 ### 2.2.0
 
 *May 3, 2024*
