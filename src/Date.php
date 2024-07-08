@@ -101,20 +101,20 @@ final readonly class Date implements Stringable
         return sprintf("%d-%02d-%02d", $ymd[0], $ymd[1], $ymd[2]);
     }
 
-    public static function today(?DateTimeZone $timeZone = null): self
+    public static function today(DateTimeZone|null $timeZone = null): self
     {
         return Calendar::fromDateTime(new DateTimeImmutable('today', $timeZone));
     }
 
     // DateTime conversion
 
-    public function toDateTime(?DateTimeZone $timeZone = null): DateTimeImmutable
+    public function toDateTime(DateTimeZone|null $timeZone = null): DateTimeImmutable
     {
         $ymd = $this->getDateArray();
         return (new DateTimeImmutable('today', $timeZone))->setDate($ymd[0], $ymd[1], $ymd[2]);
     }
 
-    public function formatDateTime(string $format, ?DateTimeZone $timeZone = null): string
+    public function formatDateTime(string $format, DateTimeZone|null $timeZone = null): string
     {
         return $this->toDateTime($timeZone)->format($format);
     }

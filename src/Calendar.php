@@ -96,7 +96,7 @@ final readonly class Calendar
         return self::fromGregorianRaw($y, $m, $d);
     }
 
-    public static function parseDateTimeString(string $string, ?DateTimeZone $timeZone = null): Date
+    public static function parseDateTimeString(string $string, DateTimeZone|null $timeZone = null): Date
     {
         return self::fromDateTime(new DateTimeImmutable($string, $timeZone));
     }
