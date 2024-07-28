@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace Arokettu\Date;
 
 use DomainException;
+use RangeException;
+use UnexpectedValueException;
 
 final readonly class JulianCalendar
 {
@@ -36,7 +38,7 @@ final readonly class JulianCalendar
         $julianDay += $c2 * 255675;
 
         if (\is_integer($julianDay) === false) {
-            throw new DomainException('Date value overflow');
+            throw new RangeException('Date value overflow');
         }
 
         return new Date($julianDay);
@@ -70,11 +72,18 @@ final readonly class JulianCalendar
     public static function fromString(string $string): Date
     {
         if (!preg_match('/^(-?\d+)-(\d+)-(\d+)$/', $string, $matches)) {
-            throw new DomainException('Unable to parse the date string: ' . $string);
+            throw new UnexpectedValueException(sprintf('Unable to parse the date string: "%s"', $string));
         }
 
         [/* $_ */, $y, $m, $d] = $matches;
 
-        return self::create(\intval($y), \intval($m), \intval($d));
+        try {
+            return self::create(\intval($y), \intval($m), \intval($d));
+        } catch (DomainException $e) {
+            throw new UnexpectedValueException(
+                sprintf('Unable to parse the date string: "%s". %s', $string, $e->getMessage()),
+                previous: $e,
+            );
+        }
     }
 }

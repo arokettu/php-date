@@ -75,7 +75,7 @@ class IsoWeekEdgeCasesTest extends TestCase
             $this->markTestSkipped();
         }
 
-        $this->expectException(\DomainException::class);
+        $this->expectException(\RangeException::class);
         $this->expectExceptionMessage('Date value overflow');
 
         IsoWeekCalendar::create(25252734927761842, 25, 2);
@@ -87,7 +87,7 @@ class IsoWeekEdgeCasesTest extends TestCase
             $this->markTestSkipped();
         }
 
-        $this->expectException(\DomainException::class);
+        $this->expectException(\RangeException::class);
         $this->expectExceptionMessage('Date value overflow');
 
         IsoWeekCalendar::create(-25252734927771267, 17, 6);

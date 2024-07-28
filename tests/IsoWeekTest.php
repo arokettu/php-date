@@ -83,16 +83,16 @@ class IsoWeekTest extends TestCase
 
     public function testParserShortWRequired(): void
     {
-        $this->expectException(\DomainException::class);
-        $this->expectExceptionMessage('Unable to parse the date string: 2024185');
+        $this->expectException(\UnexpectedValueException::class);
+        $this->expectExceptionMessage('Unable to parse the date string: "2024185"');
 
         IsoWeekCalendar::parse('2024185'); // W is required when no dashes
     }
 
     public function testParserShortWNoLeadingZeros(): void
     {
-        $this->expectException(\DomainException::class);
-        $this->expectExceptionMessage('Unable to parse the date string: 2024W001805');
+        $this->expectException(\UnexpectedValueException::class);
+        $this->expectExceptionMessage('Unable to parse the date string: "2024W001805"');
 
         IsoWeekCalendar::parse('2024W001805'); // no leading zeros after W
     }

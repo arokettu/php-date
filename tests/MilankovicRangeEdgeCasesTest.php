@@ -75,7 +75,7 @@ class MilankovicRangeEdgeCasesTest extends TestCase
             $this->markTestSkipped();
         }
 
-        $this->expectException(\DomainException::class);
+        $this->expectException(\RangeException::class);
         $this->expectExceptionMessage('Date value overflow');
 
         MilankovicCalendar::create(25252754133231977, 10, 13);
@@ -87,7 +87,7 @@ class MilankovicRangeEdgeCasesTest extends TestCase
             $this->markTestSkipped();
         }
 
-        $this->expectException(\DomainException::class);
+        $this->expectException(\RangeException::class);
         $this->expectExceptionMessage('Date value overflow');
 
         MilankovicCalendar::create(-25252754133241403, 12, 31);

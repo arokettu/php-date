@@ -75,7 +75,7 @@ class JulianRangeEdgeCasesTest extends TestCase
             $this->markTestSkipped();
         }
 
-        $this->expectException(\DomainException::class);
+        $this->expectException(\RangeException::class);
         $this->expectExceptionMessage('Date value overflow');
 
         JulianCalendar::create(25252216391110348, 5, 23);
@@ -87,7 +87,7 @@ class JulianRangeEdgeCasesTest extends TestCase
             $this->markTestSkipped();
         }
 
-        $this->expectException(\DomainException::class);
+        $this->expectException(\RangeException::class);
         $this->expectExceptionMessage('Date value overflow');
 
         JulianCalendar::create(-25252216391119773, 8, 10);

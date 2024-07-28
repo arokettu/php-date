@@ -75,7 +75,7 @@ class RangeEdgeCasesTest extends TestCase
             $this->markTestSkipped();
         }
 
-        $this->expectException(\DomainException::class);
+        $this->expectException(\RangeException::class);
         $this->expectExceptionMessage('Date value overflow');
 
         Calendar::create(25252734927761842, 6, 21);
@@ -87,7 +87,7 @@ class RangeEdgeCasesTest extends TestCase
             $this->markTestSkipped();
         }
 
-        $this->expectException(\DomainException::class);
+        $this->expectException(\RangeException::class);
         $this->expectExceptionMessage('Date value overflow');
 
         Calendar::create(-25252734927771267, 4, 29);

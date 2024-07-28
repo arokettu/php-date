@@ -99,16 +99,18 @@ class FactoriesTest extends TestCase
 
     public function testParserInvalidFormat(): void
     {
-        $this->expectException(\DomainException::class);
-        $this->expectExceptionMessage('Unable to parse the date string: 2015/12/12');
+        $this->expectException(\UnexpectedValueException::class);
+        $this->expectExceptionMessage('Unable to parse the date string: "2015/12/12"');
 
         Calendar::parse('2015/12/12'); // Only Y-m-d is accepted
     }
 
     public function testParserInvalidValue(): void
     {
-        $this->expectException(\DomainException::class);
-        $this->expectExceptionMessage('For year 2015 month 2, day must be in range 1-28');
+        $this->expectException(\UnexpectedValueException::class);
+        $this->expectExceptionMessage(
+            'Unable to parse the date string: "2015-002-42". For year 2015 month 2, day must be in range 1-28'
+        );
 
         Calendar::parse('2015-002-42');
     }

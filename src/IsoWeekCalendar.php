@@ -6,6 +6,8 @@ namespace Arokettu\Date;
 
 use Arokettu\Date\Helpers\YearHelper;
 use DomainException;
+use RangeException;
+use UnexpectedValueException;
 
 final readonly class IsoWeekCalendar
 {
@@ -54,7 +56,7 @@ final readonly class IsoWeekCalendar
         $julianDay += $c2 * self::Y400_DAYS;
 
         if (\is_integer($julianDay) === false) {
-            throw new DomainException('Date value overflow');
+            throw new RangeException('Date value overflow');
         }
 
         return new Date($julianDay);
@@ -90,11 +92,18 @@ final readonly class IsoWeekCalendar
             !preg_match('/^(-?\d+)-W?(\d+)-(\d+)$/i', $string, $matches) &&
             !preg_match('/^(-?\d+)W(\d{2})(\d)$/i', $string, $matches)
         ) {
-            throw new DomainException('Unable to parse the date string: ' . $string);
+            throw new UnexpectedValueException(sprintf('Unable to parse the date string: "%s"', $string));
         }
 
         [/* $_ */, $y, $m, $d] = $matches;
 
-        return self::create(\intval($y), \intval($m), \intval($d));
+        try {
+            return self::create(\intval($y), \intval($m), \intval($d));
+        } catch (DomainException $e) {
+            throw new UnexpectedValueException(
+                sprintf('Unable to parse the date string: "%s". %s', $string, $e->getMessage()),
+                previous: $e,
+            );
+        }
     }
 }
