@@ -2,6 +2,14 @@
 
 ## 2.x
 
+### 2.2.2
+
+*Jul 28, 2024*
+
+* Exception fixes:
+  * Overflow values now result in `RangeException`
+  * Parser always generates `UnexpectedValueException`
+
 ### 2.2.1
 
 *Jul 8, 2024*
