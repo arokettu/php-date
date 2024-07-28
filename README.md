@@ -27,6 +27,12 @@ A class for php to work with pure dates (without time).
   * [Julian](https://en.wikipedia.org/wiki/Julian_calendar)
   * [Revised Julian (Milanković)](https://en.wikipedia.org/wiki/Revised_Julian_calendar)
 
+## Installation
+
+```bash
+composer require arokettu/date
+```
+
 ## Usage
 
 The library:
@@ -66,12 +72,6 @@ $date->toString(); // "2024-02-27"
 // alternative calendar getters
 $date->julian()->getDay(); // 14
 $date->julian()->toString(); // "2024-02-14"
-```
-
-## Installation
-
-```bash
-composer require arokettu/date
 ```
 
 ## Documentation
