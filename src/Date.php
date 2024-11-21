@@ -156,6 +156,13 @@ final readonly class Date implements Stringable
         return CacheHelper::$milankovicDateObject[$this] ??= new Calendars\MilankovicDate($this);
     }
 
+    public function civil(int $switchDate = CivilCalendar::ITALY): Calendars\CivilDate
+    {
+        CacheHelper::$civilDateObject ??= new WeakMap();
+        CacheHelper::$civilDateObject[$this] ??= [];
+        return CacheHelper::$civilDateObject[$this][$switchDate] ??= new Calendars\CivilDate($this, $switchDate);
+    }
+
     // magic
 
     public function __serialize(): array

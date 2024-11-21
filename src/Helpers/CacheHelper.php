@@ -23,4 +23,6 @@ final class CacheHelper
     public static WeakMap $julianDateObject;
     /** @var WeakMap<Date, Calendars\MilankovicDate> */
     public static WeakMap $milankovicDateObject;
+    /** @var WeakMap<Date, array<int, Calendars\CivilDate>> */
+    public static WeakMap $civilDateObject;
 }
