@@ -11,6 +11,8 @@ use UnexpectedValueException;
 
 final readonly class CivilCalendar
 {
+    public const MIN = 1794168; // 200-03-01
+
     public const ITALY = 2299161; // 1582-10-15
     public const BRITAIN = 2361222; // 1752-09-14
     public const RUSSIA = 2421639; // 1918-02-14
@@ -23,8 +25,20 @@ final readonly class CivilCalendar
     public const GREECE = 2423480; // 1923-03-01
     public const HUNGARY = 2301004; // 1587-11-01
 
-    public static function create(int $switchDay, int $y, Month|int $m, int $d): Date
+    public static function create(int|Date $switchDay, int $y, Month|int $m, int $d): Date
     {
+        if ($switchDay instanceof Date) {
+            $switchDay = $switchDay->julianDay;
+        }
+
+        if ($switchDay < self::MIN) {
+            throw new DomainException(sprintf(
+                'Switch day cannot be earlier than "200-03-01", "%s" (Julian day %d) given',
+                new Date($switchDay),
+                $switchDay,
+            ));
+        }
+
         // try gregorian
         try {
             $gregDate = Calendar::create($y, $m, $d);
@@ -48,18 +62,31 @@ final readonly class CivilCalendar
 
         // try to give user an accurate error description
 
+        // if both dates are set, it must be the gap date
+        if ($gregDate && $julDate) {
+            throw new DomainException(sprintf(
+                '"%s" likely belongs to the switch gap. Dates between "%s" and "%s" are invalid',
+                $gregDate,
+                (new Date($switchDay - 1))->julian(),
+                new Date($switchDay),
+            ));
+        }
+
+        $ge ??= null;
+        $je ??= null;
+
         throw new LogicException(
             'CivilCalendar entered an invalid state while trying to parse the date. ' .
             'Please report this as a bug'
         );
     }
 
-    public static function parse(int $switchDay, string $string): Date
+    public static function parse(int|Date $switchDay, string $string): Date
     {
         return self::fromString($switchDay, $string);
     }
 
-    public static function fromString(int $switchDay, string $string): Date
+    public static function fromString(int|Date $switchDay, string $string): Date
     {
         if (!preg_match('/^(-?\d+)-(\d+)-(\d+)$/', $string, $matches)) {
             throw new UnexpectedValueException(sprintf('Unable to parse the date string: "%s"', $string));
