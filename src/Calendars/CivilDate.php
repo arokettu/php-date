@@ -12,13 +12,13 @@ final readonly class CivilDate
 
     public function __construct(
         public Date $date,
-        public int $switchDate,
+        public int $switchDay,
     ) {
     }
 
     public function getDateArray(): array
     {
-        if ($this->date->julianDay < $this->switchDate) {
+        if ($this->date->julianDay < $this->switchDay) {
             return $this->date->julian()->getDateArray();
         }
 

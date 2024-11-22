@@ -44,4 +44,21 @@ class CivilCalendarTest extends TestCase
             $label . ' pre skip',
         );
     }
+
+    public function testParse(): void
+    {
+        $date = '1868-01-03';
+        $dateGregorian = new Date(2_403_335);
+        $dateJulian = new Date(2_403_347);
+
+        self::assertEquals($dateGregorian, CivilCalendar::parse(CivilCalendar::BRITAIN, $date));
+        self::assertEquals($dateJulian, CivilCalendar::parse(CivilCalendar::RUSSIA, $date));
+    }
+
+    #[DataProvider('skipProvider')]
+    public function testParseNearSkip(string $label, int $calendar, string $preSkip, string $postSkip): void
+    {
+        self::assertEquals(new Date($calendar - 1), CivilCalendar::parse($calendar, $preSkip), $label . ' pre skip');
+        self::assertEquals(new Date($calendar), CivilCalendar::parse($calendar, $postSkip), $label . ' post skip');
+    }
 }

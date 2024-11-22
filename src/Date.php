@@ -156,11 +156,11 @@ final readonly class Date implements Stringable
         return CacheHelper::$milankovicDateObject[$this] ??= new Calendars\MilankovicDate($this);
     }
 
-    public function civil(int $switchDate = CivilCalendar::ITALY): Calendars\CivilDate
+    public function civil(int $switchDay): Calendars\CivilDate
     {
         CacheHelper::$civilDateObject ??= new WeakMap();
         CacheHelper::$civilDateObject[$this] ??= [];
-        return CacheHelper::$civilDateObject[$this][$switchDate] ??= new Calendars\CivilDate($this, $switchDate);
+        return CacheHelper::$civilDateObject[$this][$switchDay] ??= new Calendars\CivilDate($this, $switchDay);
     }
 
     // magic
