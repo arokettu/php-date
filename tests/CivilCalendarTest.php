@@ -82,15 +82,23 @@ class CivilCalendarTest extends TestCase
         $dateGregorian = new Date(2_403_335);
         $dateJulian = new Date(2_403_347);
 
-        self::assertEquals($dateGregorian, CivilCalendar::parse(CivilCalendar::BRITAIN, $date));
-        self::assertEquals($dateJulian, CivilCalendar::parse(new Date(CivilCalendar::RUSSIA), $date));
+        self::assertEquals($dateGregorian, CivilCalendar::for(CivilCalendar::BRITAIN)->parse($date));
+        self::assertEquals($dateJulian, CivilCalendar::for(new Date(CivilCalendar::RUSSIA))->parse($date));
     }
 
     #[DataProvider('skipProvider')]
     public function testParseNearSkip(string $label, int $calendar, string $preSkip, string $postSkip): void
     {
-        self::assertEquals(new Date($calendar - 1), CivilCalendar::parse($calendar, $preSkip), $label . ' pre skip');
-        self::assertEquals(new Date($calendar), CivilCalendar::parse($calendar, $postSkip), $label . ' post skip');
+        self::assertEquals(
+            new Date($calendar - 1),
+            CivilCalendar::for($calendar)->parse($preSkip),
+            $label . ' pre skip'
+        );
+        self::assertEquals(
+            new Date($calendar),
+            CivilCalendar::for($calendar)->parse($postSkip),
+            $label . ' post skip'
+        );
     }
 
     public function testPhpIntMax64(): void
@@ -100,7 +108,7 @@ class CivilCalendarTest extends TestCase
         }
 
         // from Gregorian edge cases
-        $date1 = CivilCalendar::parse(CivilCalendar::HUNGARY, '25252734927761842-06-20');
+        $date1 = CivilCalendar::for(CivilCalendar::HUNGARY)->parse('25252734927761842-06-20');
         $date2 = new Date(9223372036854775807);
 
         self::assertEquals($date2, $date1);
@@ -113,7 +121,7 @@ class CivilCalendarTest extends TestCase
         }
 
         // from Julian edge cases
-        $date1 = CivilCalendar::parse(CivilCalendar::HUNGARY, '-25252216391119773-08-11');
+        $date1 = CivilCalendar::for(CivilCalendar::HUNGARY)->parse('-25252216391119773-08-11');
         $date2 = new Date(-9223372036854775807 - 1);
 
         self::assertEquals($date2, $date1);
@@ -126,7 +134,7 @@ class CivilCalendarTest extends TestCase
             '"1916-04-10" likely belongs to the switch gap. Dates between "1916-03-31" and "1916-04-14" are invalid'
         );
 
-        CivilCalendar::create(CivilCalendar::BULGARIA, 1916, Month::April, 10);
+        CivilCalendar::for(CivilCalendar::BULGARIA)->create(1916, Month::April, 10);
     }
 
     public function testSkippedDateInParser(): void
@@ -136,7 +144,7 @@ class CivilCalendarTest extends TestCase
             '"1916-04-10" likely belongs to the switch gap. Dates between "1916-03-31" and "1916-04-14" are invalid'
         );
 
-        CivilCalendar::parse(CivilCalendar::BULGARIA, '1916-04-10');
+        CivilCalendar::for(CivilCalendar::BULGARIA)->parse('1916-04-10');
     }
 
     public function testParserInvalidFormat(): void
@@ -144,6 +152,6 @@ class CivilCalendarTest extends TestCase
         $this->expectException(UnexpectedValueException::class);
         $this->expectExceptionMessage('Unable to parse the date string: "2015/12/12"');
 
-        CivilCalendar::parse(CivilCalendar::GREECE, '2015/12/12'); // Only Y-m-d is accepted
+        CivilCalendar::for(CivilCalendar::GREECE)->parse('2015/12/12'); // Only Y-m-d is accepted
     }
 }

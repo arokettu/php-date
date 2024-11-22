@@ -25,20 +25,25 @@ final readonly class CivilCalendar
     public const GREECE = 2423480; // 1923-03-01
     public const HUNGARY = 2301004; // 1587-11-01
 
-    public static function create(int|Date $switchDay, int $y, Month|int $m, int $d): Date
-    {
-        if ($switchDay instanceof Date) {
-            $switchDay = $switchDay->julianDay;
-        }
-
-        if ($switchDay < self::MIN) {
+    public function __construct(
+        public Date $switchDay
+    ) {
+        if ($switchDay->julianDay < self::MIN) {
             throw new DomainException(sprintf(
                 'Switch day cannot be earlier than "200-03-01", "%s" (Julian day %d) given',
-                new Date($switchDay),
                 $switchDay,
+                $switchDay->julianDay,
             ));
         }
+    }
 
+    public static function for(int|Date $switchDay): self
+    {
+        return new self($switchDay instanceof Date ? $switchDay : new Date($switchDay));
+    }
+
+    public function create(int $y, Month|int $m, int $d): Date
+    {
         // try gregorian
         try {
             $gregDate = Calendar::create($y, $m, $d);
@@ -46,7 +51,7 @@ final readonly class CivilCalendar
             $gregDate = false;
         }
 
-        if ($gregDate && $gregDate->julianDay >= $switchDay) {
+        if ($gregDate && $gregDate->julianDay >= $this->switchDay->julianDay) {
             return $gregDate;
         }
 
@@ -56,7 +61,7 @@ final readonly class CivilCalendar
             $julDate = false;
         }
 
-        if ($julDate && $julDate->julianDay < $switchDay) {
+        if ($julDate && $julDate->julianDay < $this->switchDay->julianDay) {
             return $julDate;
         }
 
@@ -67,8 +72,8 @@ final readonly class CivilCalendar
             throw new DomainException(sprintf(
                 '"%s" likely belongs to the switch gap. Dates between "%s" and "%s" are invalid',
                 $gregDate,
-                (new Date($switchDay - 1))->julian(),
-                new Date($switchDay),
+                $this->switchDay->subDays(1)->julian(),
+                $this->switchDay,
             ));
         }
 
@@ -81,12 +86,12 @@ final readonly class CivilCalendar
         );
     }
 
-    public static function parse(int|Date $switchDay, string $string): Date
+    public function parse(string $string): Date
     {
-        return self::fromString($switchDay, $string);
+        return self::fromString($string);
     }
 
-    public static function fromString(int|Date $switchDay, string $string): Date
+    public function fromString(string $string): Date
     {
         if (!preg_match('/^(-?\d+)-(\d+)-(\d+)$/', $string, $matches)) {
             throw new UnexpectedValueException(sprintf('Unable to parse the date string: "%s"', $string));
@@ -95,7 +100,7 @@ final readonly class CivilCalendar
         [/* $_ */, $y, $m, $d] = $matches;
 
         try {
-            return self::create($switchDay, \intval($y), \intval($m), \intval($d));
+            return self::create(\intval($y), \intval($m), \intval($d));
         } catch (DomainException $e) {
             throw new UnexpectedValueException(
                 sprintf('Unable to parse the date string: "%s". %s', $string, $e->getMessage()),
