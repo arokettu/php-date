@@ -11,6 +11,7 @@ use Arokettu\Date\Month;
 use DomainException;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
+use RangeException;
 use UnexpectedValueException;
 
 class CivilCalendarTest extends TestCase
@@ -93,6 +94,16 @@ class CivilCalendarTest extends TestCase
         Date::today()->civil(Calendar::parse('122-01-01'));
     }
 
+    public function testCalendarBelowMin(): void
+    {
+        self::expectException(DomainException::class);
+        self::expectExceptionMessage(
+            'Switch day cannot be earlier than "200-03-01", "111-11-11" (Julian day 1761916) given'
+        );
+
+        CivilCalendar::for(Calendar::parse('111-11-11'));
+    }
+
     public function testParse(): void
     {
         $date = '1868-01-03';
@@ -170,5 +181,43 @@ class CivilCalendarTest extends TestCase
         $this->expectExceptionMessage('Unable to parse the date string: "2015/12/12"');
 
         CivilCalendar::for(CivilCalendar::GREECE)->parse('2015/12/12'); // Only Y-m-d is accepted
+    }
+
+    public function testOverflow(): void
+    {
+        self::expectException(RangeException::class);
+        self::expectExceptionMessage('Date value overflow');
+
+        CivilCalendar::for(CivilCalendar::MIN)->create(PHP_INT_MAX, Month::June, 12);
+    }
+
+    public function testInvalidGregorian(): void
+    {
+        $calendar = CivilCalendar::for(CivilCalendar::ESTONIA);
+
+        self::expectException(DomainException::class);
+        self::expectExceptionMessage(
+            'Unable to parse the due to errors: ' .
+            'Gregorian: "For year 2100 month 2, day must be in range 1-28", ' .
+            'Julian: "Julian is not applicable because the date is on or after the switch date"'
+        );
+
+        // valid julian but invalid gregorian
+        $calendar->create(2100, 2, 29);
+    }
+
+    public function testInvalidDate(): void
+    {
+        $calendar = CivilCalendar::for(CivilCalendar::ESTONIA);
+
+        self::expectException(DomainException::class);
+        self::expectExceptionMessage(
+            'Unable to parse the due to errors: ' .
+            'Gregorian: "For year 2100 month 2, day must be in range 1-28", ' .
+            'Julian: "For year 2100 month 2, day must be in range 1-29"'
+        );
+
+        // valid julian but invalid gregorian
+        $calendar->create(2100, 2, 31);
     }
 }

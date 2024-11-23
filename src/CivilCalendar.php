@@ -80,10 +80,24 @@ final readonly class CivilCalendar
         $ge ??= null;
         $je ??= null;
 
-        throw new LogicException(
-            'CivilCalendar entered an invalid state while trying to parse the date. ' .
-            'Please report this as a bug'
-        );
+        if ($ge instanceof RangeException || $je instanceof RangeException) {
+            throw new RangeException('Date value overflow', previous: $ge ?? $je);
+        }
+
+        $gregorianMessage = $gregDate ?
+            // Likely impossible
+            'Gregorian is not applicable because the date is before the switch date' : // @codeCoverageIgnore
+            $ge?->getMessage() ?? throw new LogicException('Invalid Gregorian state: not valid and no exception');
+
+        $julianMessage = $julDate ?
+            'Julian is not applicable because the date is on or after the switch date' :
+            $je?->getMessage() ?? throw new LogicException('Invalid Julian state: not valid and no exception');
+
+        throw new DomainException(sprintf(
+            'Unable to parse the due to errors: Gregorian: "%s", Julian: "%s"',
+            $gregorianMessage,
+            $julianMessage,
+        ), previous: $ge ?? $je);
     }
 
     public function parse(string $string): Date
