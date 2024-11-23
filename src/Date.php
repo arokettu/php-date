@@ -156,7 +156,7 @@ final readonly class Date implements Stringable
         return CacheHelper::$milankovicDateObject[$this] ??= new Calendars\MilankovicDate($this);
     }
 
-    public function civil(int|Date $switchDay): Calendars\CivilDate
+    public function civil(Date|int $switchDay): Calendars\CivilDate
     {
         if ($switchDay instanceof Date) {
             $switchDay = $switchDay->julianDay;

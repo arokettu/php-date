@@ -66,6 +66,23 @@ class CivilCalendarTest extends TestCase
         );
     }
 
+    #[DataProvider('skipProvider')]
+    public function testSkipWithCalendar(string $label, int $calendar, string $preSkip, string $postSkip): void
+    {
+        $civil = CivilCalendar::for($calendar);
+
+        self::assertEquals(
+            $postSkip,
+            $civil->dateToString(Date::createFromJulianDay($calendar)),
+            $label . ' post skip',
+        );
+        self::assertEquals(
+            $preSkip,
+            (string)$civil->civilDate(Date::createFromJulianDay($calendar - 1)),
+            $label . ' pre skip',
+        );
+    }
+
     public function testSkipBelowMin(): void
     {
         self::expectException(DomainException::class);

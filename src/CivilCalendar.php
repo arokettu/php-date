@@ -37,7 +37,7 @@ final readonly class CivilCalendar
         }
     }
 
-    public static function for(int|Date $switchDay): self
+    public static function for(Date|int $switchDay): self
     {
         return new self($switchDay instanceof Date ? $switchDay : new Date($switchDay));
     }
@@ -107,5 +107,15 @@ final readonly class CivilCalendar
                 previous: $e,
             );
         }
+    }
+
+    public function dateToString(Date $date): string
+    {
+        return $date->civil($this->switchDay->julianDay)->toString();
+    }
+
+    public function civilDate(Date $date): Calendars\CivilDate
+    {
+        return $date->civil($this->switchDay->julianDay);
     }
 }
