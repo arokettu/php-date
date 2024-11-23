@@ -12,8 +12,10 @@ final readonly class CivilDate
 {
     use GregorianLikeDate;
 
+    private Date|JulianCalendarDate $innerDate;
+
     public function __construct(
-        public Date $date,
+        public int $julianDay,
         public int $switchDay,
     ) {
         if ($switchDay < CivilCalendar::MIN) {
@@ -27,10 +29,10 @@ final readonly class CivilDate
 
     public function getDateArray(): array
     {
-        if ($this->date->julianDay < $this->switchDay) {
-            return $this->date->julian()->getDateArray();
-        }
+        $this->innerDate ??= $this->julianDay < $this->switchDay ?
+            new JulianCalendarDate($this->julianDay) :
+            new Date($this->julianDay);
 
-        return $this->date->getDateArray();
+        return $this->innerDate->getDateArray();
     }
 }

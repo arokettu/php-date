@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Arokettu\Date\Calendars;
 
-use Arokettu\Date\Date;
 use Arokettu\Date\Month;
 
 /**
@@ -17,7 +16,7 @@ trait GregorianLikeDate
     abstract public function getDateArray(): array; // must return [y, m, d]
 
     public function __construct(
-        public readonly Date $date,
+        public readonly int $julianDay,
     ) {
     }
 

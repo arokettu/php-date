@@ -20,7 +20,7 @@ final readonly class MilankovicDate implements Stringable
             return $this->dateArray;
         }
 
-        $j = $this->date->julianDay;
+        $j = $this->julianDay;
 
         // normalize to 0-900 years (328718 days)
         $c = intdiv($j, self::Y900_DAYS) - 7;

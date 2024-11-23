@@ -16,7 +16,7 @@ final readonly class JulianCalendarDate implements Stringable
             return $this->dateArray;
         }
 
-        $j = $this->date->julianDay;
+        $j = $this->julianDay;
 
         // normalize to 0-700 years (255675 days)
         $c = intdiv($j, 255675);

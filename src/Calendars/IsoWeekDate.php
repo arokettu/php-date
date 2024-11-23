@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Arokettu\Date\Calendars;
 
-use Arokettu\Date\Date;
 use Arokettu\Date\Helpers\YearHelper;
 use Arokettu\Date\WeekDay;
 use Stringable;
@@ -20,7 +19,7 @@ final readonly class IsoWeekDate implements Stringable
     private array $dateArray;
 
     public function __construct(
-        public Date $date,
+        public int $julianDay,
     ) {
     }
 
@@ -30,7 +29,7 @@ final readonly class IsoWeekDate implements Stringable
             return $this->dateArray;
         }
 
-        $j = $this->date->julianDay;
+        $j = $this->julianDay;
 
         // normalize to 0-400 years (146097 days)
         $cycle = intdiv($j, self::Y400_DAYS) - 13;

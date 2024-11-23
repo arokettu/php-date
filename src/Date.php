@@ -141,19 +141,19 @@ final readonly class Date implements Stringable
     public function isoWeek(): Calendars\IsoWeekDate
     {
         CacheHelper::$isoWeekDateObject ??= new WeakMap();
-        return CacheHelper::$isoWeekDateObject[$this] ??= new Calendars\IsoWeekDate($this);
+        return CacheHelper::$isoWeekDateObject[$this] ??= new Calendars\IsoWeekDate($this->julianDay);
     }
 
     public function julian(): Calendars\JulianCalendarDate
     {
         CacheHelper::$julianDateObject ??= new WeakMap();
-        return CacheHelper::$julianDateObject[$this] ??= new Calendars\JulianCalendarDate($this);
+        return CacheHelper::$julianDateObject[$this] ??= new Calendars\JulianCalendarDate($this->julianDay);
     }
 
     public function milankovic(): Calendars\MilankovicDate
     {
         CacheHelper::$milankovicDateObject ??= new WeakMap();
-        return CacheHelper::$milankovicDateObject[$this] ??= new Calendars\MilankovicDate($this);
+        return CacheHelper::$milankovicDateObject[$this] ??= new Calendars\MilankovicDate($this->julianDay);
     }
 
     public function civil(Date|int $switchDay): Calendars\CivilDate
@@ -164,7 +164,8 @@ final readonly class Date implements Stringable
 
         CacheHelper::$civilDateObject ??= new WeakMap();
         CacheHelper::$civilDateObject[$this] ??= [];
-        return CacheHelper::$civilDateObject[$this][$switchDay] ??= new Calendars\CivilDate($this, $switchDay);
+        return CacheHelper::$civilDateObject[$this][$switchDay] ??=
+            new Calendars\CivilDate($this->julianDay, $switchDay);
     }
 
     // magic
