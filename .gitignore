@@ -1,6 +1,10 @@
 # ide
 /.idea/
 
+# docs
+/venv
+/docs/build
+
 # composer
 /vendor/
 /composer.lock
