@@ -2,6 +2,12 @@
 
 ## 2.x
 
+### 2.3.0
+
+*Nov 27, 2024*
+
+* European Civil Calendar (Julian switching to Gregorian)
+
 ### 2.2.2
 
 *Jul 28, 2024*

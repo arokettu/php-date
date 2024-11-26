@@ -1,10 +1,10 @@
-Civil Calendar
-##############
+European Civil Calendar
+#######################
 
 .. highlight:: php
 
-Civil calendar covers a very common European case when the calendar changed from Julian to Gregorian.
-Civil calendar accepts a switch date, a first date that uses Gregorian calendar, as a parameter.
+Civil calendar covers a very common European use case when the calendar changes from Julian to Gregorian.
+Civil calendar accepts a switch date, a first day that uses Gregorian calendar, as a parameter.
 
 Predefined Switch Dates
 =======================
