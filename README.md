@@ -82,7 +82,7 @@ Also on Read the Docs: <https://php-date.readthedocs.io/>
 
 ## Support
 
-Please file issues on our main repo at GitLab: <https://gitlab.com/sandfox/php-uuid/-/issues>
+Please file issues on our main repo at GitLab: <https://gitlab.com/sandfox/php-date/-/issues>
 
 Feel free to ask any questions in our room on Gitter: <https://gitter.im/arokettu/community>
 
