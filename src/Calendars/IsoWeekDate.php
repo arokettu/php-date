@@ -92,7 +92,7 @@ final readonly class IsoWeekDate implements Stringable
     public function toString(): string
     {
         $ywd = $this->getDateArray();
-        return sprintf("%d-W%02d-%d", $ywd[0], $ywd[1], $ywd[2]);
+        return \sprintf('%d-W%02d-%d', $ywd[0], $ywd[1], $ywd[2]);
     }
 
     public function __toString(): string

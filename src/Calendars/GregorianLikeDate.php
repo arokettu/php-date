@@ -45,7 +45,7 @@ trait GregorianLikeDate
     public function toString(): string
     {
         $ymd = $this->getDateArray();
-        return sprintf("%d-%02d-%02d", $ymd[0], $ymd[1], $ymd[2]);
+        return \sprintf('%d-%02d-%02d', $ymd[0], $ymd[1], $ymd[2]);
     }
 
     public function __toString(): string

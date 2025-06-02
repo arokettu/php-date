@@ -92,7 +92,7 @@ final readonly class IsoWeekCalendar
             !preg_match('/^(-?\d+)-W?(\d+)-(\d+)$/i', $string, $matches) &&
             !preg_match('/^(-?\d+)W(\d{2})(\d)$/i', $string, $matches)
         ) {
-            throw new UnexpectedValueException(sprintf('Unable to parse the date string: "%s"', $string));
+            throw new UnexpectedValueException(\sprintf('Unable to parse the date string: "%s"', $string));
         }
 
         [/* $_ */, $y, $m, $d] = $matches;
@@ -101,7 +101,7 @@ final readonly class IsoWeekCalendar
             return self::create(\intval($y), \intval($m), \intval($d));
         } catch (DomainException $e) {
             throw new UnexpectedValueException(
-                sprintf('Unable to parse the date string: "%s". %s', $string, $e->getMessage()),
+                \sprintf('Unable to parse the date string: "%s". %s', $string, $e->getMessage()),
                 previous: $e,
             );
         }

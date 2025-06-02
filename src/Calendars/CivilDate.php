@@ -19,7 +19,7 @@ final readonly class CivilDate
         public int $switchDay,
     ) {
         if ($switchDay < CivilCalendar::MIN) {
-            throw new DomainException(sprintf(
+            throw new DomainException(\sprintf(
                 'Switch day cannot be earlier than "200-03-01", "%s" (Julian day %d) given',
                 new Date($switchDay),
                 $switchDay,

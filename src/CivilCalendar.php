@@ -29,7 +29,7 @@ final readonly class CivilCalendar
         public Date $switchDay
     ) {
         if ($switchDay->julianDay < self::MIN) {
-            throw new DomainException(sprintf(
+            throw new DomainException(\sprintf(
                 'Switch day cannot be earlier than "200-03-01", "%s" (Julian day %d) given',
                 $switchDay,
                 $switchDay->julianDay,
@@ -69,7 +69,7 @@ final readonly class CivilCalendar
 
         // if both dates are set, it must be the gap date
         if ($gregDate && $julDate) {
-            throw new DomainException(sprintf(
+            throw new DomainException(\sprintf(
                 '"%s" likely belongs to the switch gap. Dates between "%s" and "%s" are invalid',
                 $gregDate,
                 $this->switchDay->subDays(1)->julian(),
@@ -93,7 +93,7 @@ final readonly class CivilCalendar
             'Julian is not applicable because the date is on or after the switch date' :
             $je?->getMessage() ?? throw new LogicException('Invalid Julian state: not valid and no exception');
 
-        throw new DomainException(sprintf(
+        throw new DomainException(\sprintf(
             'Unable to parse the due to errors: Gregorian: "%s", Julian: "%s"',
             $gregorianMessage,
             $julianMessage,
@@ -108,7 +108,7 @@ final readonly class CivilCalendar
     public function fromString(string $string): Date
     {
         if (!preg_match('/^(-?\d+)-(\d+)-(\d+)$/', $string, $matches)) {
-            throw new UnexpectedValueException(sprintf('Unable to parse the date string: "%s"', $string));
+            throw new UnexpectedValueException(\sprintf('Unable to parse the date string: "%s"', $string));
         }
 
         [/* $_ */, $y, $m, $d] = $matches;
@@ -117,7 +117,7 @@ final readonly class CivilCalendar
             return self::create(\intval($y), \intval($m), \intval($d));
         } catch (DomainException $e) {
             throw new UnexpectedValueException(
-                sprintf('Unable to parse the date string: "%s". %s', $string, $e->getMessage()),
+                \sprintf('Unable to parse the date string: "%s". %s', $string, $e->getMessage()),
                 previous: $e,
             );
         }

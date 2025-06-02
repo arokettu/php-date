@@ -72,7 +72,7 @@ final readonly class JulianCalendar
     public static function fromString(string $string): Date
     {
         if (!preg_match('/^(-?\d+)-(\d+)-(\d+)$/', $string, $matches)) {
-            throw new UnexpectedValueException(sprintf('Unable to parse the date string: "%s"', $string));
+            throw new UnexpectedValueException(\sprintf('Unable to parse the date string: "%s"', $string));
         }
 
         [/* $_ */, $y, $m, $d] = $matches;
@@ -81,7 +81,7 @@ final readonly class JulianCalendar
             return self::create(\intval($y), \intval($m), \intval($d));
         } catch (DomainException $e) {
             throw new UnexpectedValueException(
-                sprintf('Unable to parse the date string: "%s". %s', $string, $e->getMessage()),
+                \sprintf('Unable to parse the date string: "%s". %s', $string, $e->getMessage()),
                 previous: $e,
             );
         }
