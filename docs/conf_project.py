@@ -1,3 +1,4 @@
 project = 'Date'
 repo = 'php-date'
-packagist = False
+packagist = 'arokettu/date'
+npmjs = False
