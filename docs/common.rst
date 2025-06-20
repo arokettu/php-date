@@ -31,6 +31,24 @@ You can add or subtract days::
     // days since the apocalypse :D
     echo $today->sub($date); // 4085 as of Feb 27, 2024
 
+Comparison
+----------
+
+.. versionadded:: 2.4
+
+``compare()`` method allows you to compare two dates. The usage is similar to ``strcmp()``::
+
+    <?php
+
+    use Arokettu\Date\Calendar;
+
+    $date1 = Calendar::parse('2025-06-20');
+    $date2 = Calendar::parse('2025-06-22');
+
+    var_dump($date1->compare($date2) > 0); // date1 > date2, false
+    var_dump($date1->compare($date2) < 0); // date1 < date2, true
+    var_dump($date1->compare($date2) === 0); // date1 === date2, false
+
 Calendar Agnostic Methods
 =========================
 

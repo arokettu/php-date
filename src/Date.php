@@ -136,6 +136,11 @@ final readonly class Date implements Stringable
         return $this->julianDay - $date->julianDay;
     }
 
+    public function compare(Date $date): int
+    {
+        return $this->julianDay <=> $date->julianDay;
+    }
+
     // alternative calendars
 
     public function isoWeek(): Calendars\IsoWeekDate
