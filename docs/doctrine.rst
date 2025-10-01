@@ -17,7 +17,8 @@ Installation
 Available Types
 ===============
 
-* ``DateType``. UUID stored in a native DATE column.
+* ``DateType``. Date stored in a native DATE column.
+* ``DateIntType``. Date stored in an integer column as a Julian day value.
 
 Usage
 =====
@@ -26,11 +27,13 @@ Register types::
 
     <?php
 
-    use Arokettu\Uuid\Doctrine\DateType;
+    use Arokettu\Date\Doctrine\DateIntType;
+    use Arokettu\Date\Doctrine\DateType;
     use Doctrine\DBAL\Types\Type;
 
     // registers types directly
     Type::addType(DateType::NAME, DateType::class);
+    Type::addType(DateIntType::NAME, DateIntType::class);
 
 .. note:: See your framework documentation for proper configuration of custom Doctrine types.
 
@@ -39,13 +42,18 @@ Apply type to a model::
     <?php
 
     use Arokettu\Date\Date;
-    use Doctrine\ORM\Mapping\{Column,Table};
+    use Arokettu\Date\Doctrine\DateIntType;
+    use Arokettu\Date\Doctrine\DateType;
+    use Doctrine\ORM\Mapping\{Column, Entity, Table};
 
     #[Entity, Table(name: 'date_object')]
     class DateObject
     {
         #[Column(type: DateType::NAME)]
         public Date $date;
+
+        #[Column(type: DateIntType::NAME)]
+        public Date $dateInt;
     }
 
 .. |Packagist|  image:: https://img.shields.io/packagist/v/arokettu/date-doctrine.svg?style=flat-square
