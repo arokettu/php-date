@@ -7,7 +7,7 @@ namespace Arokettu\Date\Tests;
 use Arokettu\Date\Date;
 use PHPUnit\Framework\TestCase;
 
-class StringTest extends TestCase
+final class StringTest extends TestCase
 {
     public function testToString(): void
     {

@@ -8,7 +8,7 @@ use Arokettu\Date\Calendar;
 use Arokettu\Date\Month;
 use PHPUnit\Framework\TestCase;
 
-class ArithmeticTest extends TestCase
+final class ArithmeticTest extends TestCase
 {
     public function testAdd(): void
     {

@@ -7,7 +7,7 @@ namespace Arokettu\Date\Tests;
 use Arokettu\Date\Date;
 use PHPUnit\Framework\TestCase;
 
-class MagicMethodsTest extends TestCase
+final class MagicMethodsTest extends TestCase
 {
     public function testSerialize(): void
     {

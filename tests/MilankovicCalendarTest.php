@@ -10,7 +10,7 @@ use Arokettu\Date\MilankovicCalendar;
 use Arokettu\Date\Month;
 use PHPUnit\Framework\TestCase;
 
-class MilankovicCalendarTest extends TestCase
+final class MilankovicCalendarTest extends TestCase
 {
     public function testGetters(): void
     {
@@ -174,7 +174,7 @@ class MilankovicCalendarTest extends TestCase
     {
         $this->expectException(\UnexpectedValueException::class);
         $this->expectExceptionMessage(
-            'Unable to parse the date string: "2015-002-42". For year 2015 month 2, day must be in range 1-28'
+            'Unable to parse the date string: "2015-002-42". For year 2015 month 2, day must be in range 1-28',
         );
 
         MilankovicCalendar::parse('2015-002-42');

@@ -9,7 +9,7 @@ use Arokettu\Date\IsoWeekCalendar;
 use Arokettu\Date\WeekDay;
 use PHPUnit\Framework\TestCase;
 
-class IsoWeekTest extends TestCase
+final class IsoWeekTest extends TestCase
 {
     public function testDates(): void
     {
@@ -141,7 +141,7 @@ class IsoWeekTest extends TestCase
     {
         $this->expectException(\UnexpectedValueException::class);
         $this->expectExceptionMessage(
-            'Unable to parse the date string: "2024-W54-5". For year 2024, week must be in range 1-52'
+            'Unable to parse the date string: "2024-W54-5". For year 2024, week must be in range 1-52',
         );
 
         IsoWeekCalendar::parse('2024-W54-5');

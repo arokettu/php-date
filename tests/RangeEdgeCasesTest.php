@@ -9,7 +9,7 @@ use Arokettu\Date\Date;
 use Arokettu\Date\WeekDay;
 use PHPUnit\Framework\TestCase;
 
-class RangeEdgeCasesTest extends TestCase
+final class RangeEdgeCasesTest extends TestCase
 {
     public function testZero(): void
     {

@@ -9,7 +9,7 @@ use Arokettu\Date\JulianCalendar;
 use Arokettu\Date\WeekDay;
 use PHPUnit\Framework\TestCase;
 
-class JulianRangeEdgeCasesTest extends TestCase
+final class JulianRangeEdgeCasesTest extends TestCase
 {
     public function testZero(): void
     {

@@ -26,7 +26,7 @@ final readonly class CivilCalendar
     public const GREECE     = 2423480; // 1923-03-01
 
     public function __construct(
-        public Date $switchDay
+        public Date $switchDay,
     ) {
         if ($switchDay->julianDay < self::MIN) {
             throw new DomainException(\sprintf(

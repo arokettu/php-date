@@ -9,7 +9,7 @@ use Arokettu\Date\Month;
 use Arokettu\Date\WeekDay;
 use PHPUnit\Framework\TestCase;
 
-class GettersTest extends TestCase
+final class GettersTest extends TestCase
 {
     public function testWeekDay(): void
     {

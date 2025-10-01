@@ -9,7 +9,7 @@ use Arokettu\Date\Date;
 use Arokettu\Date\Month;
 use PHPUnit\Framework\TestCase;
 
-class FactoriesTest extends TestCase
+final class FactoriesTest extends TestCase
 {
     public function testToday(): void
     {
@@ -109,7 +109,7 @@ class FactoriesTest extends TestCase
     {
         $this->expectException(\UnexpectedValueException::class);
         $this->expectExceptionMessage(
-            'Unable to parse the date string: "2015-002-42". For year 2015 month 2, day must be in range 1-28'
+            'Unable to parse the date string: "2015-002-42". For year 2015 month 2, day must be in range 1-28',
         );
 
         Calendar::parse('2015-002-42');

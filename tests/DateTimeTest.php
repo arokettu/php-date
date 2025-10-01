@@ -8,7 +8,7 @@ use Arokettu\Date\Calendar;
 use Arokettu\Date\Date;
 use PHPUnit\Framework\TestCase;
 
-class DateTimeTest extends TestCase
+final class DateTimeTest extends TestCase
 {
     public function testFromDateTime(): void
     {

@@ -7,7 +7,7 @@ namespace Arokettu\Date\Tests;
 use Arokettu\Date\Calendar;
 use PHPUnit\Framework\TestCase;
 
-class GregorianEdgeCasesTest extends TestCase
+final class GregorianEdgeCasesTest extends TestCase
 {
     public function testLeapYears(): void
     {

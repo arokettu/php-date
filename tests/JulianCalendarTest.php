@@ -10,7 +10,7 @@ use Arokettu\Date\JulianCalendar;
 use Arokettu\Date\Month;
 use PHPUnit\Framework\TestCase;
 
-class JulianCalendarTest extends TestCase
+final class JulianCalendarTest extends TestCase
 {
     public function testGetters(): void
     {
@@ -144,7 +144,7 @@ class JulianCalendarTest extends TestCase
     {
         $this->expectException(\UnexpectedValueException::class);
         $this->expectExceptionMessage(
-            'Unable to parse the date string: "2015-002-42". For year 2015 month 2, day must be in range 1-28'
+            'Unable to parse the date string: "2015-002-42". For year 2015 month 2, day must be in range 1-28',
         );
 
         JulianCalendar::parse('2015-002-42');

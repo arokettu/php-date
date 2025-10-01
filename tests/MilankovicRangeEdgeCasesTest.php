@@ -9,7 +9,7 @@ use Arokettu\Date\MilankovicCalendar;
 use Arokettu\Date\WeekDay;
 use PHPUnit\Framework\TestCase;
 
-class MilankovicRangeEdgeCasesTest extends TestCase
+final class MilankovicRangeEdgeCasesTest extends TestCase
 {
     public function testZero(): void
     {

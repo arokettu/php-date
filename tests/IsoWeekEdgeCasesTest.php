@@ -9,7 +9,7 @@ use Arokettu\Date\IsoWeekCalendar;
 use Arokettu\Date\WeekDay;
 use PHPUnit\Framework\TestCase;
 
-class IsoWeekEdgeCasesTest extends TestCase
+final class IsoWeekEdgeCasesTest extends TestCase
 {
     public function testZero(): void
     {

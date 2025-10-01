@@ -14,7 +14,7 @@ use PHPUnit\Framework\TestCase;
 use RangeException;
 use UnexpectedValueException;
 
-class CivilCalendarTest extends TestCase
+final class CivilCalendarTest extends TestCase
 {
     public static function skipProvider(): array
     {
@@ -88,7 +88,7 @@ class CivilCalendarTest extends TestCase
     {
         self::expectException(DomainException::class);
         self::expectExceptionMessage(
-            'Switch day cannot be earlier than "200-03-01", "122-01-01" (Julian day 1765620) given'
+            'Switch day cannot be earlier than "200-03-01", "122-01-01" (Julian day 1765620) given',
         );
 
         Date::today()->civil(Calendar::parse('122-01-01'));
@@ -98,7 +98,7 @@ class CivilCalendarTest extends TestCase
     {
         self::expectException(DomainException::class);
         self::expectExceptionMessage(
-            'Switch day cannot be earlier than "200-03-01", "111-11-11" (Julian day 1761916) given'
+            'Switch day cannot be earlier than "200-03-01", "111-11-11" (Julian day 1761916) given',
         );
 
         CivilCalendar::for(Calendar::parse('111-11-11'));
@@ -120,12 +120,12 @@ class CivilCalendarTest extends TestCase
         self::assertEquals(
             new Date($calendar - 1),
             CivilCalendar::for($calendar)->parse($preSkip),
-            $label . ' pre skip'
+            $label . ' pre skip',
         );
         self::assertEquals(
             new Date($calendar),
             CivilCalendar::for($calendar)->parse($postSkip),
-            $label . ' post skip'
+            $label . ' post skip',
         );
     }
 
@@ -159,7 +159,7 @@ class CivilCalendarTest extends TestCase
     {
         self::expectException(DomainException::class);
         self::expectExceptionMessage(
-            '"1916-04-10" likely belongs to the switch gap. Dates between "1916-03-31" and "1916-04-14" are invalid'
+            '"1916-04-10" likely belongs to the switch gap. Dates between "1916-03-31" and "1916-04-14" are invalid',
         );
 
         CivilCalendar::for(CivilCalendar::BULGARIA)->create(1916, Month::April, 10);
@@ -169,7 +169,7 @@ class CivilCalendarTest extends TestCase
     {
         self::expectException(UnexpectedValueException::class);
         self::expectExceptionMessage(
-            '"1916-04-10" likely belongs to the switch gap. Dates between "1916-03-31" and "1916-04-14" are invalid'
+            '"1916-04-10" likely belongs to the switch gap. Dates between "1916-03-31" and "1916-04-14" are invalid',
         );
 
         CivilCalendar::for(CivilCalendar::BULGARIA)->parse('1916-04-10');
@@ -199,7 +199,7 @@ class CivilCalendarTest extends TestCase
         self::expectExceptionMessage(
             'Unable to parse the due to errors: ' .
             'Gregorian: "For year 2100 month 2, day must be in range 1-28", ' .
-            'Julian: "Julian is not applicable because the date is on or after the switch date"'
+            'Julian: "Julian is not applicable because the date is on or after the switch date"',
         );
 
         // valid julian but invalid gregorian
@@ -214,7 +214,7 @@ class CivilCalendarTest extends TestCase
         self::expectExceptionMessage(
             'Unable to parse the due to errors: ' .
             'Gregorian: "For year 2100 month 2, day must be in range 1-28", ' .
-            'Julian: "For year 2100 month 2, day must be in range 1-29"'
+            'Julian: "For year 2100 month 2, day must be in range 1-29"',
         );
 
         // valid julian but invalid gregorian
