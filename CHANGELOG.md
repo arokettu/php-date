@@ -2,11 +2,17 @@
 
 ## 2.x
 
+### 2.5.0
+
+*Jan 11, 2026*
+
+* Added ``Calendar::fromTimestamp()``
+
 ### 2.4.0
 
 *Jun 20, 2025*
 
-* ``compare()``
+* Added ``Date::compare()``
 
 ### 2.3.0
 
