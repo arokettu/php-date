@@ -114,4 +114,23 @@ final readonly class Calendar
     {
         return self::fromDateTime(new DateTimeImmutable($string, $timeZone));
     }
+
+    public static function fromTimestamp(int|float $timestamp, DateTimeZone|null $timeZone = null): Date
+    {
+        if (PHP_VERSION_ID >= 80400) {
+            // @codeCoverageIgnoreStart
+            $dt = DateTimeImmutable::createFromTimestamp($timestamp);
+            // @codeCoverageIgnoreEnd
+        } elseif (\is_int($timestamp)) {
+            $dt = DateTimeImmutable::createFromFormat('U', (string)$timestamp);
+        } else {
+            $dt = DateTimeImmutable::createFromFormat('U', \sprintf('%.0F', $timestamp));
+        }
+
+        if ($timeZone) {
+            $dt = $dt->setTimezone($timeZone);
+        }
+
+        return self::fromDateTime($dt);
+    }
 }

@@ -85,6 +85,8 @@ Import/Export date from DateTime objects.
 Import
 ------
 
+.. versionadded:: 2.5 `fromTimestamp()`
+
 Create an instance of Date from an instance of DateTimeInterface or by using DateTime's own parser::
 
     <?php
@@ -92,11 +94,13 @@ Create an instance of Date from an instance of DateTimeInterface or by using Dat
     use Arokettu\Date\Calendar;
 
     $dt = new DateTime('Feb 28, 2024');
-    $date = Calendar::fromDateTime($dt);
+    $date = Calendar::fromDateTime($dt); // in the DT object's timezone
+    // or
+    $date = Calendar::fromTimestamp($dt->getTimestamp()); // in UTC by default
     // or
     $date = Calendar::parseDateTimeString('Feb 28, 2024');
     // or any other expression DateTime supports:
-    $date = Calendar::parseDateTimeString('tomorrow');
+    $date = Calendar::parseDateTimeString('tomorrow'); // in the current TZ by default
     // including iso week date:
     $date = Calendar::parseDateTimeString('2021-W36-7');
 
