@@ -25,6 +25,7 @@ Documentation
    isoweek
    milankovic
    julian_date
+   easter
    doctrine
    upgrade
 
