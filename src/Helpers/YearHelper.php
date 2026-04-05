@@ -37,19 +37,13 @@ final class YearHelper
             return $y % 4 === 0;
         }
         // century div 9 must be 2 or 6
-        $cq = intdiv($y, 100) % 9;
-        if ($cq < 0) {
-            $cq += 9;
-        }
+        $cq = MathHelper::mod(intdiv($y, 100), 9);
         return $cq === 2 || $cq === 6;
     }
 
     private static function wdIsoYear(int $y): int
     {
-        if ($y < 0) {
-            $y -= (intdiv($y, 400) - 1) * 400;
-        }
-        return ($y + intdiv($y, 4) - intdiv($y, 100)  + intdiv($y, 400)) % 7;
+        return MathHelper::mod($y + intdiv($y, 4) - intdiv($y, 100) + intdiv($y, 400), 7);
     }
 
     public static function wdIsoYearJan4(int $y): int

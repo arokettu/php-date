@@ -10,6 +10,7 @@ declare(strict_types=1);
 namespace Arokettu\Date;
 
 use Arokettu\Date\Helpers\CacheHelper;
+use Arokettu\Date\Helpers\MathHelper;
 use DateTimeImmutable;
 use DateTimeZone;
 use Stringable;
@@ -43,8 +44,7 @@ final readonly class Date implements Stringable
 
     public function getWeekDayNumber(): int
     {
-        $wd = $this->julianDay % 7 + 1;
-        return $wd > 0 ? $wd : $wd + 7;
+        return MathHelper::mod($this->julianDay, 7) + 1;
     }
 
     public function getDateArray(): array
