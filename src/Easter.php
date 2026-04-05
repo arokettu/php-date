@@ -57,12 +57,6 @@ final readonly class Easter
         $e = MathHelper::mod(2 * $b + 4 * $c + 6 * $d + 6, 7);
         $easter = $d + $e - 9;
 
-        if ($easter === 25 && $d === 28 && $e === 6 && $a > 10) {
-            $easter = 18;
-        } elseif ($easter === 26 && $d === 29 && $e === 6) {
-            $easter = 19;
-        }
-
         // skip checks to "fall into" March if needed
         return Closure::bind(
             static fn ($easter) => JulianCalendar::fromJulianRaw($year, 4, $easter),
