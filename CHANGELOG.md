@@ -2,7 +2,9 @@
 
 ## 2.x
 
-### next
+### 2.6.0 "Easter Edition"
+
+*Apr 5, 2026*
 
 * Easter helper
 
