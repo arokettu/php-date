@@ -16,7 +16,7 @@ final readonly class MathHelper
 {
     public static function mod(int $a, int $m): int
     {
-        \assert($m < 2, '$m must be an integer greater than 1');
+        \assert($m > 1, '$m must be an integer greater than 1');
 
         $mod = $a % $m;
         if ($mod < 0) {
