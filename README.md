@@ -42,6 +42,7 @@ The library:
 
 use Arokettu\Date\Calendar;
 use Arokettu\Date\Date;
+use Arokettu\Date\Easter;
 use Arokettu\Date\JulianCalendar;
 use Arokettu\Date\Month;
 
@@ -72,6 +73,9 @@ $date->toString(); // "2024-02-27"
 // alternative calendar getters
 $date->julian()->getDay(); // 14
 $date->julian()->toString(); // "2024-02-14"
+
+// helpers
+$easter = Easter::gregorian(2026); // 2026-04-05
 ```
 
 ## Documentation
