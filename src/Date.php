@@ -13,26 +13,16 @@ use Arokettu\Date\Helpers\CacheHelper;
 use Arokettu\Date\Helpers\MathHelper;
 use DateTimeImmutable;
 use DateTimeZone;
-use Stringable;
 use WeakMap;
 
-final readonly class Date implements Stringable
+final readonly class Date implements DateInterface
 {
-    public function __construct(
-        public int $julianDay,
-    ) {
-    }
+    use Traits\BaseTrait;
+    use Traits\DeprecatedTrait;
 
-    // Julian day
-
-    public function getJulianDay(): int
+    public function toGregorian(): Date
     {
-        return $this->julianDay;
-    }
-
-    public static function createFromJulianDay(int $julianDay): self
-    {
-        return new self($julianDay);
+        return $this; // optimize
     }
 
     // various getters
