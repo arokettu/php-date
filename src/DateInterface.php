@@ -16,9 +16,6 @@ use Stringable;
  */
 interface DateInterface extends Stringable
 {
-    public static function fromJulianDay(int $julianDay): self;
-    public static function fromDateInterface(DateInterface $date): self;
-
     public function getJulianDay(): int;
 
     public function compare(DateInterface $date): int;

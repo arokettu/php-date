@@ -10,7 +10,6 @@ declare(strict_types=1);
 namespace Arokettu\Date;
 
 use Arokettu\Date\Helpers\CacheHelper;
-use Arokettu\Date\Helpers\MathHelper;
 use DateTimeImmutable;
 use DateTimeZone;
 use WeakMap;
@@ -19,6 +18,17 @@ final readonly class Date implements DateInterface
 {
     use Traits\BaseTrait;
     use Traits\DeprecatedTrait;
+    use Traits\WeekTrait;
+
+    public function __construct(
+        public int $julianDay,
+    ) {
+    }
+
+    private function copyWith(int $julianDay): self
+    {
+        return new self($julianDay);
+    }
 
     public function toGregorian(): Date
     {
@@ -26,16 +36,6 @@ final readonly class Date implements DateInterface
     }
 
     // various getters
-
-    public function getWeekDay(): WeekDay
-    {
-        return WeekDay::from($this->getWeekDayNumber());
-    }
-
-    public function getWeekDayNumber(): int
-    {
-        return MathHelper::mod($this->julianDay, 7) + 1;
-    }
 
     public function getDateArray(): array
     {

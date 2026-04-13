@@ -15,10 +15,9 @@ trait BaseTrait
 {
     // Julian day
 
-    public function __construct(
-        public readonly int $julianDay,
-    ) {
-    }
+    public readonly int $julianDay;
+
+    abstract private function copyWith(int $julianDay): self;
 
     public static function fromJulianDay(int $julianDay): self
     {
@@ -39,12 +38,12 @@ trait BaseTrait
 
     public function addDays(int $days): self
     {
-        return new self($this->julianDay + $days);
+        return $this->copyWith($this->julianDay + $days);
     }
 
     public function subDays(int $days): self
     {
-        return new self($this->julianDay - $days);
+        return $this->copyWith($this->julianDay - $days);
     }
 
     public function sub(DateInterface $date): int
