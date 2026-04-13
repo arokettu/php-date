@@ -148,21 +148,6 @@ final readonly class Date implements DateInterface
 
     // magic
 
-    public function __serialize(): array
-    {
-        return [$this->julianDay];
-    }
-
-    public function __unserialize(array $data): void
-    {
-        [$this->julianDay] = $data;
-    }
-
-    public function __toString(): string
-    {
-        return $this->toString();
-    }
-
     public function __debugInfo(): array
     {
         return [

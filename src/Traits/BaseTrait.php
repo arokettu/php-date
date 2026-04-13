@@ -56,4 +56,23 @@ trait BaseTrait
     {
         return $this->julianDay <=> $date->julianDay;
     }
+
+    // magic
+
+    abstract public function toString(): string;
+
+    public function __serialize(): array
+    {
+        return [$this->julianDay];
+    }
+
+    public function __unserialize(array $data): void
+    {
+        [$this->julianDay] = $data;
+    }
+
+    public function __toString(): string
+    {
+        return $this->toString();
+    }
 }
