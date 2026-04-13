@@ -21,5 +21,7 @@ interface DateInterface extends Stringable
 
     public function getJulianDay(): int;
 
+    public function compare(DateInterface $date): int;
+
     public function toGregorian(): Date;
 }

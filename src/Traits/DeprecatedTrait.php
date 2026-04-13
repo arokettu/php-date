@@ -21,4 +21,13 @@ trait DeprecatedTrait
     {
         return self::fromJulianDay($julianDay);
     }
+
+    /**
+     * @deprecated
+     * @see Date:addDays()
+     */
+    public function add(int $days): Date
+    {
+        return $this->addDays($days);
+    }
 }

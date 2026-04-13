@@ -114,28 +114,6 @@ final readonly class Date implements DateInterface
         return $this->toDateTime($timeZone)->format($format);
     }
 
-    // arithmetic
-
-    public function add(int $days): self
-    {
-        return new self($this->julianDay + $days);
-    }
-
-    public function subDays(int $days): self
-    {
-        return new self($this->julianDay - $days);
-    }
-
-    public function sub(Date $date): int
-    {
-        return $this->julianDay - $date->julianDay;
-    }
-
-    public function compare(Date $date): int
-    {
-        return $this->julianDay <=> $date->julianDay;
-    }
-
     // alternative calendars
 
     public function isoWeek(): Calendars\IsoWeekDate
