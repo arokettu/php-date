@@ -16,14 +16,7 @@ use Arokettu\Date\Month;
  */
 trait GregorianLikeTrait
 {
-    private readonly array $dateArray;
-
     abstract public function getDateArray(): array; // must return [y, m, d]
-
-    public function __construct(
-        public readonly int $julianDay,
-    ) {
-    }
 
     public function getYear(): int
     {
@@ -51,10 +44,5 @@ trait GregorianLikeTrait
     {
         $ymd = $this->getDateArray();
         return \sprintf('%d-%02d-%02d', $ymd[0], $ymd[1], $ymd[2]);
-    }
-
-    public function __toString(): string
-    {
-        return $this->toString();
     }
 }
