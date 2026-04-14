@@ -7,13 +7,13 @@
 
 declare(strict_types=1);
 
-namespace Arokettu\Date\Calendars;
+namespace Arokettu\Date;
 
 use Stringable;
 
-final readonly class JulianCalendarDate implements Stringable
+final readonly class JulianDate implements Stringable
 {
-    use GregorianLikeDate;
+    use Calendars\GregorianLikeDate;
 
     public function getDateArray(): array
     {
