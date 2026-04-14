@@ -16,33 +16,32 @@ use Arokettu\Date\Month;
  */
 trait GregorianGettersTrait
 {
-    abstract public function getDateArray(): array; // must return [y, m, d]
+    private readonly array $dateArray;
 
     public function getYear(): int
     {
-        return $this->getDateArray()[0];
+        return $this->dateArray[0];
     }
 
     public function getMonth(): Month
     {
-        return Month::from($this->getDateArray()[1]);
+        return Month::from($this->dateArray[1]);
     }
 
     public function getMonthNumber(): int
     {
-        return $this->getDateArray()[1];
+        return $this->dateArray[1];
     }
 
     public function getDay(): int
     {
-        return $this->getDateArray()[2];
+        return $this->dateArray[2];
     }
 
     // string conversion
 
     public function toString(): string
     {
-        $ymd = $this->getDateArray();
-        return \sprintf('%d-%02d-%02d', $ymd[0], $ymd[1], $ymd[2]);
+        return \sprintf('%d-%02d-%02d', $this->dateArray[0], $this->dateArray[1], $this->dateArray[2]);
     }
 }

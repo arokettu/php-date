@@ -18,6 +18,7 @@ trait BaseTrait
     public readonly int $julianDay;
 
     abstract private function copyWith(int $julianDay): self;
+    abstract private function init(): void;
 
     public static function fromJulianDay(int $julianDay): self
     {
@@ -68,6 +69,7 @@ trait BaseTrait
     public function __unserialize(array $data): void
     {
         [$this->julianDay] = $data;
+        $this->init();
     }
 
     public function __toString(): string

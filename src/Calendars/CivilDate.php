@@ -30,6 +30,7 @@ final readonly class CivilDate
                 $switchDay,
             ));
         }
+        $this->dateArray = $this->getDateArray();
     }
 
     public function getDateArray(): array

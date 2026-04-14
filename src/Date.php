@@ -23,12 +23,10 @@ final readonly class Date implements DateInterface
     use Traits\GregorianGettersTrait;
     use Traits\GregorianCreationTrait;
 
-    private array $dateArray;
-
     public function __construct(
         public int $julianDay,
     ) {
-        $this->getDateArray();
+        $this->init();
     }
 
     private function copyWith(int $julianDay): self
@@ -85,10 +83,11 @@ final readonly class Date implements DateInterface
 
     public function getDateArray(): array
     {
-        if (isset($this->dateArray)) {
-            return $this->dateArray;
-        }
+        return $this->dateArray;
+    }
 
+    public function init(): void
+    {
         $j = $this->julianDay;
 
         // normalize to 0-400 years (146097 days)
@@ -110,7 +109,7 @@ final readonly class Date implements DateInterface
         $m = (intdiv($h, 153) + 2) % 12 + 1;
         $y = intdiv($e, 1461) - 4716 + intdiv(12 + 2 - $m, 12);
 
-        return $this->dateArray = [$y + $c * 400, $m, $d];
+        $this->dateArray = [$y + $c * 400, $m, $d];
     }
 
     public static function today(DateTimeZone|null $timeZone = null): self

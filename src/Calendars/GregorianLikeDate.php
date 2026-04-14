@@ -20,6 +20,7 @@ trait GregorianLikeDate
     public function __construct(
         public readonly int $julianDay,
     ) {
+        $this->getDateArray();
     }
 
     public function __toString(): string
