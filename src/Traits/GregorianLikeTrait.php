@@ -7,14 +7,14 @@
 
 declare(strict_types=1);
 
-namespace Arokettu\Date\Calendars;
+namespace Arokettu\Date\Traits;
 
 use Arokettu\Date\Month;
 
 /**
  * Calendar with Years, Roman Months and Days
  */
-trait GregorianLikeDate
+trait GregorianLikeTrait
 {
     private readonly array $dateArray;
 
