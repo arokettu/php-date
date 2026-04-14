@@ -18,9 +18,6 @@ use WeakMap;
  */
 final class CacheHelper
 {
-    // gregorian y-m-d
-    public static WeakMap $dateArray;
-
     // calendars
     /** @var WeakMap<Date, Calendars\IsoWeekDate> */
     public static WeakMap $isoWeekDateObject;

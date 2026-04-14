@@ -19,6 +19,9 @@ final readonly class Date implements DateInterface
     use Traits\BaseTrait;
     use Traits\DeprecatedTrait;
     use Traits\WeekTrait;
+    use Traits\GregorianLikeTrait;
+
+    private array $dateArray;
 
     public function __construct(
         public int $julianDay,
@@ -39,9 +42,8 @@ final readonly class Date implements DateInterface
 
     public function getDateArray(): array
     {
-        $cache = CacheHelper::$dateArray ??= new WeakMap();
-        if (isset($cache[$this])) {
-            return $cache[$this];
+        if (isset($this->dateArray)) {
+            return $this->dateArray;
         }
 
         $j = $this->julianDay;
@@ -65,35 +67,7 @@ final readonly class Date implements DateInterface
         $m = (intdiv($h, 153) + 2) % 12 + 1;
         $y = intdiv($e, 1461) - 4716 + intdiv(12 + 2 - $m, 12);
 
-        return $cache[$this] = [$y + $c * 400, $m, $d];
-    }
-
-    public function getYear(): int
-    {
-        return $this->getDateArray()[0];
-    }
-
-    public function getMonth(): Month
-    {
-        return Month::from($this->getDateArray()[1]);
-    }
-
-    public function getMonthNumber(): int
-    {
-        return $this->getDateArray()[1];
-    }
-
-    public function getDay(): int
-    {
-        return $this->getDateArray()[2];
-    }
-
-    // string conversion
-
-    public function toString(): string
-    {
-        $ymd = $this->getDateArray();
-        return \sprintf('%d-%02d-%02d', $ymd[0], $ymd[1], $ymd[2]);
+        return $this->dateArray = [$y + $c * 400, $m, $d];
     }
 
     public static function today(DateTimeZone|null $timeZone = null): self
