@@ -16,6 +16,7 @@ use WeakMap;
 final readonly class Date implements DateInterface
 {
     use Traits\BaseTrait;
+    use Traits\ConversionTrait;
     use Traits\DeprecatedTrait;
     use Traits\WeekTrait;
     use Traits\GregorianGettersTrait;
@@ -81,13 +82,12 @@ final readonly class Date implements DateInterface
 
     // julian to date
 
-    public function getDateArray(): array
-    {
-        return $this->dateArray;
-    }
-
     public function init(): void
     {
+        if (isset($this->dateArray)) {
+            return;
+        }
+
         $j = $this->julianDay;
 
         // normalize to 0-400 years (146097 days)
@@ -120,12 +120,6 @@ final readonly class Date implements DateInterface
         return CacheHelper::$isoWeekDateObject[$this] ??= new Calendars\IsoWeekDate($this->julianDay);
     }
 
-    public function julian(): Calendars\JulianCalendarDate
-    {
-        CacheHelper::$julianDateObject ??= new WeakMap();
-        return CacheHelper::$julianDateObject[$this] ??= new Calendars\JulianCalendarDate($this->julianDay);
-    }
-
     public function milankovic(): Calendars\MilankovicDate
     {
         CacheHelper::$milankovicDateObject ??= new WeakMap();
@@ -149,9 +143,9 @@ final readonly class Date implements DateInterface
     public function __debugInfo(): array
     {
         return [
-            'julianDay'     => $this->julianDay,
-            'weekDay'       => $this->getWeekDay()->name,
             'gregorian'     => $this->toString(),
+            'weekDay'       => $this->getWeekDay()->name,
+            'julianDay'     => $this->julianDay,
         ];
     }
 }

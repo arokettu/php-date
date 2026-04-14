@@ -9,6 +9,7 @@ declare(strict_types=1);
 
 namespace Arokettu\Date\Traits;
 
+use Arokettu\Date\Calendars\JulianCalendarDate;
 use Arokettu\Date\Date;
 
 trait DeprecatedTrait
@@ -29,5 +30,14 @@ trait DeprecatedTrait
     public function add(int $days): Date
     {
         return $this->addDays($days);
+    }
+
+    /**
+     * @deprecated
+     * @see Date::toJulian()
+     */
+    public function julian(): JulianCalendarDate
+    {
+        return $this->toJulian();
     }
 }

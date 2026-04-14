@@ -59,9 +59,9 @@ final readonly class Easter
 
         // skip checks to "fall into" March if needed
         return Closure::bind(
-            static fn ($easter) => JulianCalendar::fromJulianRaw($year, 4, $easter),
+            static fn ($easter) => JulianDate::fromRaw($year, 4, $easter)->toGregorian(), // todo: return Julian in 3.0
             null,
-            JulianCalendar::class,
+            JulianDate::class,
         )($easter);
     }
 }

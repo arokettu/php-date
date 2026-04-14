@@ -41,12 +41,12 @@ trait GregorianCreationTrait
         return self::fromRaw($y, $mi, $d);
     }
 
-    public static function parse(string $string): Date
+    public static function parse(string $string): self
     {
         return self::fromString($string);
     }
 
-    public static function fromString(string $string): Date
+    public static function fromString(string $string): self
     {
         if (!preg_match('/^(-?\d+)-(\d+)-(\d+)$/', $string, $matches)) {
             throw new UnexpectedValueException(\sprintf('Unable to parse the date string: "%s"', $string));

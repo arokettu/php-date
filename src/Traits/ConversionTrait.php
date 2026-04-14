@@ -10,6 +10,7 @@ declare(strict_types=1);
 namespace Arokettu\Date\Traits;
 
 use Arokettu\Date\Date;
+use Arokettu\Date\JulianDate;
 
 trait ConversionTrait
 {
@@ -18,5 +19,10 @@ trait ConversionTrait
     public function toGregorian(): Date
     {
         return new Date($this->julianDay);
+    }
+
+    public function toJulian(): JulianDate
+    {
+        return new JulianDate($this->julianDay);
     }
 }

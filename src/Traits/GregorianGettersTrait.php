@@ -18,6 +18,11 @@ trait GregorianGettersTrait
 {
     private readonly array $dateArray;
 
+    public function getDateArray(): array
+    {
+        return $this->dateArray;
+    }
+
     public function getYear(): int
     {
         return $this->dateArray[0];

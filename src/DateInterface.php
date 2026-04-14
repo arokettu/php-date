@@ -21,4 +21,5 @@ interface DateInterface extends Stringable
     public function compare(DateInterface $date): int;
 
     public function toGregorian(): Date;
+    public function toJulian(): JulianDate;
 }
