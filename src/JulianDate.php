@@ -45,3 +45,7 @@ final readonly class JulianDate implements Stringable
         return $this->dateArray = [$y + $c * 700, $m, $d];
     }
 }
+
+// phpcs:disable PSR1.Files.SideEffects.FoundWithSymbols
+// load alias
+class_exists(Calendars\JulianCalendarDate::class);
