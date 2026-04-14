@@ -12,91 +12,26 @@ namespace Arokettu\Date;
 use DateTimeImmutable;
 use DateTimeInterface;
 use DateTimeZone;
-use DomainException;
-use RangeException;
-use UnexpectedValueException;
 
 /**
  * Gregorian calendar and DateTime interoperability
+ * @deprecated Use methods directly on the Date class
  */
 final readonly class Calendar
 {
-    // ymd factory
-
-    private static function fromGregorianRaw(int $y, int $m, int $d): Date
-    {
-        // normalize to 0..400 years (146097 days)
-        if ($y >= 0) {
-            $c1 = intdiv($y, 400);
-            $c2 = 0;
-        } else {
-            // this insane code here is to avoid int overflow on PHP_INT_MIN
-            // because simple logic with $c1 * 146097 may overflow, so we split one correction with two
-            // that's guaranteed to be in range as long as the final result is in range
-            $c1 = intdiv($y, 400) - 1;
-            $c2 = intdiv($c1, 2);
-            $c1 -= $c2;
-        }
-        $y -= ($c1 + $c2) * 400;
-
-        // https://en.wikipedia.org/wiki/Julian_day#Converting_Gregorian_calendar_date_to_Julian_Day_Number
-        $monthCorrection = intdiv($m - 14, 12);
-        $julianDay =
-            intdiv(1461 * ($y + 4800 + $monthCorrection), 4) +
-            intdiv(367 * ($m - 2 - 12 * $monthCorrection), 12) -
-            intdiv(3 * (intdiv($y + 4900 + $monthCorrection, 100)), 4) +
-            $d - 32075;
-        $julianDay += $c1 * 146097;
-        $julianDay += $c2 * 146097;
-
-        if (\is_integer($julianDay) === false) {
-            throw new RangeException('Date value overflow');
-        }
-
-        return new Date($julianDay);
-    }
-
     public static function create(int $y, Month|int $m, int $d): Date
     {
-        if ($m instanceof Month) {
-            $mo = $m;
-            $mi = $m->value;
-        } else {
-            $mo = Month::tryFrom($m) ??
-                throw new DomainException('Month must be an instance of Month or an integer 1-12');
-            $mi = $m;
-        }
-
-        $days = $mo->gregorianDays($y);
-
-        if ($d < 1 || $d > $days) {
-            throw new DomainException("For year $y month $mi, day must be in range 1-$days");
-        }
-
-        return self::fromGregorianRaw($y, $mi, $d);
+        return Date::create($y, $m, $d);
     }
 
     public static function parse(string $string): Date
     {
-        return self::fromString($string);
+        return Date::parse($string);
     }
 
     public static function fromString(string $string): Date
     {
-        if (!preg_match('/^(-?\d+)-(\d+)-(\d+)$/', $string, $matches)) {
-            throw new UnexpectedValueException(\sprintf('Unable to parse the date string: "%s"', $string));
-        }
-
-        [/* $_ */, $y, $m, $d] = $matches;
-
-        try {
-            return self::create(\intval($y), \intval($m), \intval($d));
-        } catch (DomainException $e) {
-            throw new UnexpectedValueException(
-                \sprintf('Unable to parse the date string: "%s". %s', $string, $e->getMessage()),
-                previous: $e,
-            );
-        }
+        return Date::fromString($string);
     }
 
     // DateTime conversion
@@ -107,7 +42,7 @@ final readonly class Calendar
         $m = \intval($dateTime->format('m'));
         $d = \intval($dateTime->format('d'));
 
-        return self::fromGregorianRaw($y, $m, $d);
+        return Date::create($y, $m, $d);
     }
 
     public static function parseDateTimeString(string $string, DateTimeZone|null $timeZone = null): Date

@@ -14,7 +14,7 @@ use Arokettu\Date\Month;
 /**
  * Calendar with Years, Roman Months and Days
  */
-trait GregorianLikeTrait
+trait GregorianGettersTrait
 {
     abstract public function getDateArray(): array; // must return [y, m, d]
 

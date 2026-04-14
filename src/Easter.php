@@ -40,9 +40,9 @@ final readonly class Easter
 
         // skip checks to "fall into" March if needed
         return Closure::bind(
-            static fn ($easter) => Calendar::fromGregorianRaw($year, 4, $easter),
+            static fn ($easter) => Date::fromRaw($year, 4, $easter),
             null,
-            Calendar::class,
+            Date::class,
         )($easter);
     }
 

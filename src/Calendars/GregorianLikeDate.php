@@ -9,11 +9,11 @@ declare(strict_types=1);
 
 namespace Arokettu\Date\Calendars;
 
-use Arokettu\Date\Traits\GregorianLikeTrait;
+use Arokettu\Date\Traits\GregorianGettersTrait;
 
 trait GregorianLikeDate
 {
-    use GregorianLikeTrait;
+    use GregorianGettersTrait;
 
     private readonly array $dateArray;
 
