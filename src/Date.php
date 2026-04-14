@@ -155,3 +155,7 @@ final readonly class Date implements DateInterface
         ];
     }
 }
+
+// phpcs:disable PSR1.Files.SideEffects.FoundWithSymbols
+// load alias
+class_exists(GregorianDate::class);
