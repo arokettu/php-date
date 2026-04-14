@@ -10,8 +10,6 @@ declare(strict_types=1);
 namespace Arokettu\Date;
 
 use Arokettu\Date\Helpers\CacheHelper;
-use DateTimeImmutable;
-use DateTimeZone;
 use RangeException;
 use WeakMap;
 
@@ -22,6 +20,8 @@ final readonly class Date implements DateInterface
     use Traits\WeekTrait;
     use Traits\GregorianGettersTrait;
     use Traits\GregorianCreationTrait;
+    use Traits\DateTimeGettersTrait;
+    use Traits\DateTimeCreationTrait;
 
     public function __construct(
         public int $julianDay,
@@ -110,24 +110,6 @@ final readonly class Date implements DateInterface
         $y = intdiv($e, 1461) - 4716 + intdiv(12 + 2 - $m, 12);
 
         $this->dateArray = [$y + $c * 400, $m, $d];
-    }
-
-    public static function today(DateTimeZone|null $timeZone = null): self
-    {
-        return Calendar::fromDateTime(new DateTimeImmutable('today', $timeZone));
-    }
-
-    // DateTime conversion
-
-    public function toDateTime(DateTimeZone|null $timeZone = null): DateTimeImmutable
-    {
-        $ymd = $this->getDateArray();
-        return (new DateTimeImmutable('today', $timeZone))->setDate($ymd[0], $ymd[1], $ymd[2]);
-    }
-
-    public function formatDateTime(string $format, DateTimeZone|null $timeZone = null): string
-    {
-        return $this->toDateTime($timeZone)->format($format);
     }
 
     // alternative calendars
