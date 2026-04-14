@@ -154,9 +154,6 @@ final readonly class Date implements DateInterface
             'julianDay'     => $this->julianDay,
             'weekDay'       => $this->getWeekDay()->name,
             'gregorian'     => $this->toString(),
-            'isoWeek'       => $this->isoWeek()->toString(),
-            'julian'        => $this->julian()->toString(),
-            'milankovic'    => $this->milankovic()->toString(),
         ];
     }
 }
