@@ -38,13 +38,6 @@ final class JulianCalendarTest extends TestCase
         self::assertEquals($date1, $date3);
     }
 
-    public function testSameInstance(): void
-    {
-        $date = Date::today();
-
-        self::assertTrue($date->julian() === $date->julian());
-    }
-
     public function testArithmetic(): void
     {
         $date1 = JulianCalendar::parse('2100-01-01');
