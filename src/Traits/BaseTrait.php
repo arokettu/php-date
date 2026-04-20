@@ -11,6 +11,9 @@ namespace Arokettu\Date\Traits;
 
 use Arokettu\Date\DateInterface;
 
+/**
+ * @internal
+ */
 trait BaseTrait
 {
     // Julian day

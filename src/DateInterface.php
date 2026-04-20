@@ -22,4 +22,8 @@ interface DateInterface extends Stringable
 
     public function toGregorian(): Date;
     public function toJulian(): JulianDate;
+
+    public function addDays(int $days): self;
+    public function subDays(int $days): self;
+    public function sub(DateInterface $date): int;
 }

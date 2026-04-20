@@ -15,6 +15,9 @@ use DateTimeImmutable;
 use DateTimeInterface;
 use DateTimeZone;
 
+/**
+ * @internal
+ */
 trait DateTimeCreationTrait
 {
     abstract public static function fromDateInterface(DateInterface $date): self;

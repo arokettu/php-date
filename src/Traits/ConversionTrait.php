@@ -12,6 +12,9 @@ namespace Arokettu\Date\Traits;
 use Arokettu\Date\Date;
 use Arokettu\Date\JulianDate;
 
+/**
+ * @internal
+ */
 trait ConversionTrait
 {
     public readonly int $julianDay;

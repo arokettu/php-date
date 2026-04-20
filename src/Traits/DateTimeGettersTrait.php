@@ -12,6 +12,9 @@ namespace Arokettu\Date\Traits;
 use DateTimeImmutable;
 use DateTimeZone;
 
+/**
+ * @internal
+ */
 trait DateTimeGettersTrait
 {
     public function toDateTime(DateTimeZone|null $timeZone = null): DateTimeImmutable

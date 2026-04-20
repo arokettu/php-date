@@ -12,6 +12,9 @@ namespace Arokettu\Date\Traits;
 use Arokettu\Date\Calendars\JulianCalendarDate;
 use Arokettu\Date\Date;
 
+/**
+ * @internal
+ */
 trait DeprecatedTrait
 {
     /**

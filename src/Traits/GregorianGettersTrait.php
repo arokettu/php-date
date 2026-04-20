@@ -13,6 +13,7 @@ use Arokettu\Date\Month;
 
 /**
  * Calendar with Years, Roman Months and Days
+ * @internal
  */
 trait GregorianGettersTrait
 {

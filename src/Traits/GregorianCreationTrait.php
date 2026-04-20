@@ -14,6 +14,9 @@ use Arokettu\Date\Month;
 use DomainException;
 use UnexpectedValueException;
 
+/**
+ * @internal
+ */
 trait GregorianCreationTrait
 {
     // creation

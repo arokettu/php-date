@@ -12,6 +12,9 @@ namespace Arokettu\Date\Traits;
 use Arokettu\Date\Helpers\MathHelper;
 use Arokettu\Date\WeekDay;
 
+/**
+ * @internal
+ */
 trait WeekTrait
 {
     public readonly int $julianDay;
