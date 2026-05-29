@@ -9,7 +9,6 @@ declare(strict_types=1);
 
 namespace Arokettu\Date\Traits;
 
-use Arokettu\Date\Date;
 use Arokettu\Date\Month;
 use DomainException;
 use UnexpectedValueException;

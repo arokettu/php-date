@@ -9,8 +9,9 @@ declare(strict_types=1);
 
 namespace Arokettu\Date\Traits;
 
-use Arokettu\Date\Calendars\JulianCalendarDate;
 use Arokettu\Date\Date;
+use Arokettu\Date\JulianDate;
+use Arokettu\Date\MilankovicDate;
 
 /**
  * @internal
@@ -39,8 +40,17 @@ trait DeprecatedTrait
      * @deprecated
      * @see Date::toJulian()
      */
-    public function julian(): JulianCalendarDate
+    public function julian(): JulianDate
     {
         return $this->toJulian();
+    }
+
+    /**
+     * @deprecated
+     * @see Date::toMilankovic()
+     */
+    public function milankovic(): MilankovicDate
+    {
+        return $this->toMilankovic();
     }
 }

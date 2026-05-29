@@ -35,7 +35,7 @@ final readonly class Date implements DateInterface
         return new self($julianDay);
     }
 
-    public function toGregorian(): Date
+    public function toGregorian(): self
     {
         return $this; // optimize
     }
@@ -72,7 +72,7 @@ final readonly class Date implements DateInterface
             throw new RangeException('Date value overflow');
         }
 
-        return new Date($julianDay);
+        return new self($julianDay);
     }
 
     private static function getMonthDays(int $year, Month $month): int
@@ -118,12 +118,6 @@ final readonly class Date implements DateInterface
     {
         CacheHelper::$isoWeekDateObject ??= new WeakMap();
         return CacheHelper::$isoWeekDateObject[$this] ??= new Calendars\IsoWeekDate($this->julianDay);
-    }
-
-    public function milankovic(): MilankovicDate
-    {
-        CacheHelper::$milankovicDateObject ??= new WeakMap();
-        return CacheHelper::$milankovicDateObject[$this] ??= new MilankovicDate($this->julianDay);
     }
 
     public function civil(Date|int $switchDay): Calendars\CivilDate

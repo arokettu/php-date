@@ -32,7 +32,7 @@ final readonly class JulianDate implements DateInterface
         return new self($julianDay);
     }
 
-    public function toJulian(): JulianDate
+    public function toJulian(): self
     {
         return $this; // optimize
     }
@@ -68,7 +68,7 @@ final readonly class JulianDate implements DateInterface
             throw new RangeException('Date value overflow');
         }
 
-        return new JulianDate($julianDay);
+        return new self($julianDay);
     }
 
     private static function getMonthDays(int $year, Month $month): int

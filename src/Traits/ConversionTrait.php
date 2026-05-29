@@ -11,6 +11,7 @@ namespace Arokettu\Date\Traits;
 
 use Arokettu\Date\Date;
 use Arokettu\Date\JulianDate;
+use Arokettu\Date\MilankovicDate;
 
 /**
  * @internal
@@ -27,5 +28,10 @@ trait ConversionTrait
     public function toJulian(): JulianDate
     {
         return new JulianDate($this->julianDay);
+    }
+
+    public function toMilankovic(): MilankovicDate
+    {
+        return new MilankovicDate($this->julianDay);
     }
 }

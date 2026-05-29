@@ -9,21 +9,95 @@ declare(strict_types=1);
 
 namespace Arokettu\Date;
 
-use Arokettu\Date\Calendars\GregorianLikeDate;
-use Stringable;
+use RangeException;
 
-final readonly class MilankovicDate implements Stringable
+final readonly class MilankovicDate implements DateInterface
 {
-    use GregorianLikeDate;
+    use Traits\BaseTrait;
+    use Traits\ConversionTrait;
+    use Traits\WeekTrait;
+    use Traits\GregorianGettersTrait;
+    use Traits\GregorianCreationTrait;
+    use Traits\DateTimeGettersTrait;
+    use Traits\DateTimeCreationTrait;
 
     private const Y900_DAYS = 328718;
     private const Y900_YEARS = 900;
     private const BASE_DAY = 1721119; // 0-2-28 Milankovic
 
-    public function getDateArray(): array
+    public function __construct(
+        public int $julianDay,
+    ) {
+        $this->init();
+    }
+
+    private function copyWith(int $julianDay): self
+    {
+        return new self($julianDay);
+    }
+
+    public function toMilankovic(): self
+    {
+        return $this; // optimize
+    }
+
+    // date to milankovic
+
+    private static function fromRaw(int $y, int $m, int $d): self
+    {
+        // normalize to 0..900 years (328718 days)
+        if ($y >= 0) {
+            $c1 = intdiv($y, self::Y900_YEARS);
+            $c2 = 0;
+        } else {
+            // this insane code here is to avoid int overflow on PHP_INT_MIN
+            // because simple logic with $c1 * 328718 may overflow, so we split one correction with two
+            // that's guaranteed to be in range as long as the final result is in range
+            $c1 = intdiv($y, self::Y900_YEARS) - 1;
+            $c2 = intdiv($c1, 2);
+            $c1 -= $c2;
+        }
+        $y -= ($c1 + $c2) * self::Y900_YEARS;
+
+        $m -= 3; // 0 = March
+        if ($m < 0) {
+            $y -= 1;
+            $m += 12;
+        }
+        if ($y < 0) {
+            $c1 -= 1;
+            $y += self::Y900_YEARS;
+        }
+        $c = intdiv($y, 100);
+        $yc = $y % 100;
+        $julianDay =
+            intdiv(self::Y900_DAYS * $c + 6, 9) +
+            intdiv(36525 * $yc, 100) +
+            intdiv(153 * $m + 2, 5) +
+            $d + self::BASE_DAY;
+
+        // apply back correction
+        $julianDay += $c1 * self::Y900_DAYS;
+        $julianDay += $c2 * self::Y900_DAYS;
+
+        if (\is_integer($julianDay) === false) {
+            throw new RangeException('Date value overflow');
+        }
+
+        return new self($julianDay);
+    }
+
+    private static function getMonthDays(int $year, Month $month): int
+    {
+        return $month->milankovicDays($year);
+    }
+
+    // julian to date
+
+    public function init(): void
     {
         if (isset($this->dateArray)) {
-            return $this->dateArray;
+            return;
         }
 
         $j = $this->julianDay;
@@ -52,6 +126,18 @@ final readonly class MilankovicDate implements Stringable
         $m = $mm - 12 * $mc + 3;
         $d = intdiv($yd % 153, 5) + 1;
 
-        return $this->dateArray = [$y + $c * 900, $m, $d];
+        $this->dateArray = [$y + $c * 900, $m, $d];
+    }
+
+    public function __debugInfo(): array
+    {
+        return [
+            'milankovic' => $this->toString(),
+            ...$this->toGregorian()->__debugInfo(),
+        ];
     }
 }
+
+// phpcs:disable PSR1.Files.SideEffects.FoundWithSymbols
+// load alias
+class_exists(Calendars\MilankovicDate::class);

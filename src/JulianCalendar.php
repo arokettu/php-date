@@ -10,7 +10,7 @@ declare(strict_types=1);
 namespace Arokettu\Date;
 
 /**
- * @deprecated
+ * @deprecated Use methods directly on the JulianDate class
  */
 final readonly class JulianCalendar
 {

@@ -45,13 +45,6 @@ final class MilankovicCalendarTest extends TestCase
         self::assertEquals(Calendar::parse('1800-01-01'), $date); // in 19th century they align
     }
 
-    public function testSameInstance(): void
-    {
-        $date = Date::today();
-
-        self::assertTrue($date->milankovic() === $date->milankovic());
-    }
-
     public function testArithmetic(): void
     {
         $date1 = MilankovicCalendar::parse('2000-01-01');
