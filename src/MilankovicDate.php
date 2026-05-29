@@ -7,8 +7,9 @@
 
 declare(strict_types=1);
 
-namespace Arokettu\Date\Calendars;
+namespace Arokettu\Date;
 
+use Arokettu\Date\Calendars\GregorianLikeDate;
 use Stringable;
 
 final readonly class MilankovicDate implements Stringable

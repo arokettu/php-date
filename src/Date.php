@@ -120,10 +120,10 @@ final readonly class Date implements DateInterface
         return CacheHelper::$isoWeekDateObject[$this] ??= new Calendars\IsoWeekDate($this->julianDay);
     }
 
-    public function milankovic(): Calendars\MilankovicDate
+    public function milankovic(): MilankovicDate
     {
         CacheHelper::$milankovicDateObject ??= new WeakMap();
-        return CacheHelper::$milankovicDateObject[$this] ??= new Calendars\MilankovicDate($this->julianDay);
+        return CacheHelper::$milankovicDateObject[$this] ??= new MilankovicDate($this->julianDay);
     }
 
     public function civil(Date|int $switchDay): Calendars\CivilDate
