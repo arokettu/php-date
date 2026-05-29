@@ -46,7 +46,7 @@ final readonly class Easter
         )($easter);
     }
 
-    public static function julian(int $year): Date
+    public static function julian(int $year): JulianDate
     {
         // Gauss formula
         $a = $year % 19;
@@ -59,7 +59,7 @@ final readonly class Easter
 
         // skip checks to "fall into" March if needed
         return Closure::bind(
-            static fn ($easter) => JulianDate::fromRaw($year, 4, $easter)->toGregorian(), // todo: return Julian in 3.0
+            static fn ($easter) => JulianDate::fromRaw($year, 4, $easter),
             null,
             JulianDate::class,
         )($easter);

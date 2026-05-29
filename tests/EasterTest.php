@@ -35,7 +35,7 @@ final class EasterTest extends TestCase
     #[DataProvider('orthodoxEaster20thCentury')]
     public function testJulian(int $year, Date $date): void
     {
-        self::assertEquals($date, Easter::julian($year), (string)$date);
+        self::assertEquals($date, Easter::julian($year)->toGregorian(), (string)$date);
     }
 
     public static function orthodoxEaster20thCentury(): iterable
