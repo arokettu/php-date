@@ -10,6 +10,7 @@ declare(strict_types=1);
 namespace Arokettu\Date\Traits;
 
 use Arokettu\Date\Date;
+use Arokettu\Date\IsoWeekDate;
 use Arokettu\Date\JulianDate;
 use Arokettu\Date\MilankovicDate;
 
@@ -52,5 +53,14 @@ trait DeprecatedTrait
     public function milankovic(): MilankovicDate
     {
         return $this->toMilankovic();
+    }
+
+    /**
+     * @deprecated
+     * @see Date::toIsoWeek()
+     */
+    public function isoWeek(): IsoWeekDate
+    {
+        return $this->toIsoWeek();
     }
 }

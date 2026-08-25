@@ -114,12 +114,6 @@ final readonly class Date implements DateInterface
 
     // alternative calendars
 
-    public function isoWeek(): Calendars\IsoWeekDate
-    {
-        CacheHelper::$isoWeekDateObject ??= new WeakMap();
-        return CacheHelper::$isoWeekDateObject[$this] ??= new Calendars\IsoWeekDate($this->julianDay);
-    }
-
     public function civil(Date|int $switchDay): Calendars\CivilDate
     {
         if ($switchDay instanceof Date) {

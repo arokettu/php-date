@@ -22,6 +22,8 @@ interface DateInterface extends Stringable
 
     public function toGregorian(): Date;
     public function toJulian(): JulianDate;
+    public function toMilankovic(): MilankovicDate;
+    public function toIsoWeek(): IsoWeekDate;
 
     public function addDays(int $days): self;
     public function subDays(int $days): self;

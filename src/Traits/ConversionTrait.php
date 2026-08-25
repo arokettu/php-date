@@ -10,6 +10,7 @@ declare(strict_types=1);
 namespace Arokettu\Date\Traits;
 
 use Arokettu\Date\Date;
+use Arokettu\Date\IsoWeekDate;
 use Arokettu\Date\JulianDate;
 use Arokettu\Date\MilankovicDate;
 
@@ -33,5 +34,10 @@ trait ConversionTrait
     public function toMilankovic(): MilankovicDate
     {
         return new MilankovicDate($this->julianDay);
+    }
+
+    public function toIsoWeek(): IsoWeekDate
+    {
+        return new IsoWeekDate($this->julianDay);
     }
 }
