@@ -2,6 +2,12 @@
 
 ## 2.x
 
+### 2.6.1
+
+*Sep 25, 2026*
+
+* Fixed PHP 8.6 deprecations
+
 ### 2.6.0 "Easter Edition"
 
 *Apr 5, 2026*
