@@ -49,7 +49,7 @@ final readonly class Calendar
         $julianDay += $c1 * 146097;
         $julianDay += $c2 * 146097;
 
-        if (\is_integer($julianDay) === false) {
+        if (\is_int($julianDay) === false) {
             throw new RangeException('Date value overflow');
         }
 

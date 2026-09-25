@@ -60,7 +60,7 @@ final readonly class IsoWeekCalendar
         $julianDay += $c1 * self::Y400_DAYS;
         $julianDay += $c2 * self::Y400_DAYS;
 
-        if (\is_integer($julianDay) === false) {
+        if (\is_int($julianDay) === false) {
             throw new RangeException('Date value overflow');
         }
 

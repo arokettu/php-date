@@ -58,7 +58,7 @@ final readonly class MilankovicCalendar
         $julianDay += $c1 * self::Y900_DAYS;
         $julianDay += $c2 * self::Y900_DAYS;
 
-        if (\is_integer($julianDay) === false) {
+        if (\is_int($julianDay) === false) {
             throw new RangeException('Date value overflow');
         }
 
